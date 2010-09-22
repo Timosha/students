@@ -42,8 +42,7 @@
 \paragraph{Построение лексического анализатора на основании автоматной грамматики}
 \subparagraph{Цели}
 \begin{itemize}
-	\item Оценить недостатки процедурного программирования
-	\item Научиться строить рекурсивные алгоритмы
+	\item Научитсья строить лексические анализаторы на основе автоматной грамматики
 \end{itemize}
 
 \paragraph{Порядок выполнения}
@@ -58,165 +57,130 @@
 \subparagraph{Рекомендации по выполнению}
 \begin{itemize}
 	\item Массивы фиксированной длины
-	\item Трассировка отключается макросом
 	\item Данные задаются внутри исходного кода
 \end{itemize}
 
 \subparagraph{Состав отчета}
 \begin{itemize}
 	\item Титульный лист (фамилия, группа, номер варианта, наименование работы, задание)
-	\item Текст рекурсивной функции
-	\item Текст итеративной функции
-	\item Результаты выполнения
+	\item Текст задания
+	\item Грамматика
+	\item Диаграмма переходов
+	\item Автоматы
+	\item Текст программы
 \end{itemize}
 
 \paragraph{Варианты заданий}
-\begin{center}
-\tablehead{}
-\begin{supertabular}{|m{0.7cm}|m{12.403cm}|m{3.296cm}|}
-\hline
-N &
-Содержательное описание грамматики &
-Примеры\\\hline
-1 &
-Символы a,b стоят парами, порядок в паре не важен &
-ababbaabbaba\\\hline
-2 &
-Одинаковые символы \ стоят парами &
-aabbaabbbbaa\\\hline
-3 &
-В начале строки a, \ далее - вперемешку &
-ababbbabb\\\hline
-4 &
-Первый символ — не важен, далее одни a &
-baaaaaaaaa
-
-aaaaaaaaaa\\\hline
-5 &
-Либо одни a, либо одни b &
-aaaaaaaaaa
-
-bbbbbbbbb\\\hline
-6 &
-В конце строки b, начало — не важно &
-ababbbabb\\\hline
-7 &
-Одинаковые символы не должны стоять рядом &
-ababababab
-
-bababababa\\\hline
-8 &
-В строке должна встретиться хотя бы одна буква a &
-bbbbbabbb
-
-aaaaaaaaaa\\\hline
-9 &
-Предпоследним символом строки должна быть b, остальные — не важно &
-abbabaabb\\\hline
-10 &
-Вторым символом строки должна быть a, остальные — не важно &
-baaaaabbb\\\hline
-\end{supertabular}
-\end{center}
+В задании указано содержательное описание грамматики и простейши пример для облегчения понимания.
 \begin{enumerate}
-	\item Напишите программу печатающую $n$-ое число Фибоначчи.
-	\item Напишите программу вычисляющую факториал натурального числа.
-	\item Напишите программу проверяющую является ли введённое число простым.
-	\item Напишите программу сортировки массива.
-	\item Напишите программу поиска максимального элемента массива.
-	\item Напишите программу возводящую одно натуральное число в степень другого, без использования функции возведения в степень.
-	\item Напишите программу генерации всех правильных скобочных структур длины $2n$. Например для $n=3$ таких структур может быть 5: ()()(), (())(), ()(()), ((())), (()()).
-	\item Имеется три стержня А, В, С. На стержень А нанизано $n$ дисков радиуса $1, 2,..., n$ таким образом, что диск радиуса $i$ является $i$-м сверху. Требуется переместить все диски на стержень В, сохраняя их порядок расположения (диск с большим радиусом находится ниже). За один раз можно перемещать только один диск с любого стержня на любой другой стержень. При этом должно выполняться следующее условие: на каждом стержне ни в какой момент времени никакой диск не может находиться выше диска с меньшим радиусом. 
-	\item Заданы три числа: a, b, c. Необходимо выяснить, можно ли так переставить цифры в числах a и b, чтобы в сумме получилось c.
-	\item Задан набор слов. Построить из них любую цепочку таким образом, чтобы символ в конце слова совпадал с символом в начале следующего.
-	\item На рисунке показан пример треугольника из чисел. Написать программу, вычисляющую наибольшую сумму чисел, через которые проходит путь, начинающийся на вершине и заканчивающийся где-то на основании. 	
-%		\begin{figure}
-%%			\includegraphics[scale=1.00]{images/image1.jpg}
-%%			\label{fig:1}
-%%		\end{figure}
-		
+	\item Одинаковые символы стоят парами: $aabbaabbbbaa$
+	\item В начале строки $a$: $ababbbabb$
+	\item Первый символ — не важен, далее одни $a$: $baaaaaaaaa$, $aaaaaaaaaa$
+	\item Либо одни $a$, либо одни $b$: $aaaaaaaaaa$, $bbbbbbbbb$
+	\item В конце строки $b$: $ababbbabb$
+	\item Одинаковые символы не должны стоять рядом: $ababababab$, $bababababa$
+	\item В строке должна встретиться хотя бы одна буква $a$: $bbbbbabbb$, $aaaaaaaaa$
+	\item Предпоследним символом строки должна быть $b$, $abbabaabb$
+	\item Вторым символом строки должна быть $a$: $baaaaabbb$
+	\item Два последних символа должны быть $b$: $abababb$, $bbbbbb$
+	\item Первый и третий символы должны быть разными: $aabbbabab$, $baaabbbab$
+	\item Первый и последний символы должны быть одинковыми: $ababababa$, $babbbabab$
 \end{enumerate}
 
 \paragraph{Пример}
 \subparagraph{Задание}
-Напишите программу проверяющую является ли введённое число факториалом какого либо числа.
+Символы a и b стоят парами: abbaabab, baabbaba.
 \subparagraph{Грамматика}
+Построим грамматику по заданию: \\
 $S -> aB$\\
 $S -> bA$\\
 $B -> bF$\\
 $A -> aF$\\
 $B -> bS$\\
 $A -> aS$\\
-$F -$ конечное состояние\\
+$F -> \dashv $
 
-\begin{equation}
-n! = 1\cdot 2\cdot\ldots\cdot n =\prod_{i=1}^n i
-\end{equation}
-Получается что факториал числа $n$ должен делиться нацело на все натуральные числа до $n$ включая $n$. Напишем программу рализующую такую проверку:
+\subparagraph{Автомат}
+Построим диаграмму переходов \\
+\centering\includegraphics[scale=0.5]{images/image1.jpg}\vspace{1em}
+%% TODO: сделать диаграмму на latex'е
+\begin{tabular}[l]{c|cccc}
+    & $-$ & $-$   & $-$   & $+$ \\
+\hline
+    & $S$ & $A$   & $B$   & $F$ \\
+$a$ & $B$ & $S,F$ &       &     \\
+$b$ & $A$ &       & $S,F$ &     \\
+\end{tabular}
 
-\begin{lstlisting}[language=c,{caption=итеративная программа}]
+\subparagraph{Детерминированный автомат}
+Перейдём к детерменированному автомату.\\
+
+\begin{tabular}[l]{c|cccccc}
+    & $-$ & $-$       & $-$       & $+$    & $-$    & $+$       \\
+\hline
+    & $S$ & $A$       & $B$       & $F$    & $\{\}$ & $\{S,F\}$ \\
+$a$ & $B$ & $\{S,F\}$ &  $\{\}$   & $\{\}$ & $\{\}$ & $B$       \\
+$b$ & $A$ & $\{\}$    & $\{S,F\}$ & $\{\}$ & $\{\}$ & $A$       \\
+\end{tabular}
+
+\subparagraph{Программа}
+\begin{lstlisting}[language=c,{caption=анализатор}]
 #include <stdio.h>
 
-int check_factorial_iterate(int number){
-	if(number < 0) 
-		return 0;
-	if(number == 0) 
-		return 1;
-	int i = 1;
-	int n = 1;
-	for(;n<number;n*=i,i++){
-		
-		if(number%i != 0)
-			return 0;
+#define S  0 /* S */
+#define A  1 /* A */
+#define B  2 /* B */
+#define F  3 /* F */
+#define H  4 /* {S,F} */
+#define W  5 /* {} */
+
+#define P  1 /* + */
+#define M  0 /* - */
+
+#define a 0 /* a */
+#define b 1 /* b */
+
+struct action
+{
+	int sos; /* состояние */
+	int out; /* вывод */
+};
+
+int main()
+{
+	int table[2][6];
+	table[a][S] = B;
+	table[b][S] = A;
+	table[a][A] = H;
+	table[b][A] = W;
+	table[a][B] = W;
+	table[b][B] = H;
+	table[a][F] = W;
+	table[b][F] = W;
+	table[a][W] = W;
+	table[b][W] = W;
+	table[a][H] = B;
+	table[b][H] = A;
+
+	int output[6];
+	output[S] = M;
+	output[A] = M;
+	output[B] = M;
+	output[F] = P;
+	output[W] = M;
+	output[H] = P;
+
+
+	int input[]={b,a,a,b};
+	int n = 4, i;
+	int isos = S;
+ 
+	for( i=0; i<n; ++i)
+	{
+		isos=table[input[i]][isos];
 	}
-	return 1;
-}
 
-int main(){
-	if(check_factorial_iterate(362880))
-		printf("%s","yes");
-	else
-		printf("%s","no");
-	return 0;
-}
-\end{lstlisting}
-
-\subparagraph{Рекурсивное решение}
-Возьмём рекурсивное определение факториала:
-\begin{equation}
-n!= \begin{cases}
-1 & n = 0,\\
-n \cdot (n-1)! & n > 0.
-\end{cases}
-\end{equation}
-
-\begin{lstlisting}[language=c,{caption=рекурсивная программа}]
-#include <stdio.h>
-
-int check_factorial_recursive(int number, int i){
-	if(number < 0) 
-		return 0;	
-	if(number == 0)
-		return 1;
-
-	if(number == 1)
-		return 1;
-	
-	if( number%i != 0)
-		return 0;
-	else		
-		return check_factorial_recursive(number/i,i+1);
-	
-}
-
-int main(){
-	int number = 362881;
-
-	if(check_factorial_recursive(number,1))
-		printf("%s\n","yes");
-	else
-		printf("%s\n","no");
-
+	printf("%d\n", output[isos]);
 	return 0;
 }
 \end{lstlisting}

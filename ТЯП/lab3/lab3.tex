@@ -1,0 +1,125 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[T2A]{fontenc}
+\usepackage[utf8x]{inputenc}
+\usepackage[russian,english]{babel}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{fancyhdr}
+\usepackage{amsmath}
+\usepackage{indentfirst} % включить отступ у первого абзаца
+\usepackage{array}
+\usepackage{supertabular}
+\usepackage{hhline}
+\usepackage{semantic}
+
+%%\usepackage[
+%%		a4paper, includefoot,
+%%		left=3cm, right=1cm, top=2cm, bottom=1.5cm,
+%%		headsep=1cm, footskip=1cm
+%%	]{geometry}
+
+\title{Лабораторная работа №3}
+\author{Кузнецов Д.Б.\and Вагин Д.А.}
+\date{10/2010}
+\pagestyle{empty}
+\pagestyle{fancy}
+\lhead{Лабораторная работа №3} %верхний колонтитул слева
+
+\lstloadlanguages{c++,c,tex,bash}
+\lstset{
+	language=tex,inputencoding=utf8x,
+	extendedchars=\true,captionpos=b,tabsize=4,
+	frame=lines,
+	keywordstyle=\color{blue},commentstyle=\color{green},stringstyle=\color{red},
+	breaklines=true,showstringspaces=false,basicstyle=\footnotesize
+}
+
+\begin{document}
+
+\paragraph{Построение лексического анализатора с использованием lex}
+\subparagraph{Цели}
+\begin{itemize}
+	\item Познакомиться с «регулярными выражениями»
+	\item Познакомиться с программой lex
+	\item Научиться строить лексические анализаторы с использованием lex
+\end{itemize}
+
+\paragraph{Порядок выполнения}
+\begin{enumerate}
+	\item Построить регулярное выражение
+	\item Составить файл для lex
+	\item Получить программу на Си
+	\item Откомпилировать и запустить
+	\item Написать отчет
+\end{enumerate}
+
+\subparagraph{Состав отчета}
+\begin{itemize}
+	\item Титульный лист (фамилия, группа, номер варианта, наименование работы, задание)
+	\item Текст задания
+	\item Текст программы на lex
+	\item Результаты работы программы
+\end{itemize}
+
+\paragraph{Варианты заданий}
+В задании указано содержательное описание грамматики и простейши пример для облегчения понимания.
+\begin{enumerate}
+	\item Одинаковые символы стоят парами: $aabbaabbbbaa$
+	\item В начале строки $a$: $ababbbabb$
+	\item Первый символ — не важен, далее одни $a$: $baaaaaaaaa$, $aaaaaaaaaa$
+	\item Либо одни $a$, либо одни $b$: $aaaaaaaaaa$, $bbbbbbbbb$
+	\item В конце строки $b$: $ababbbabb$
+	\item Одинаковые символы не должны стоять рядом: $ababababab$, $bababababa$
+	\item В строке должна встретиться хотя бы одна буква $a$: $bbbbbabbb$, $aaaaaaaaa$
+	\item Предпоследним символом строки должна быть $b$, $abbabaabb$
+	\item Вторым символом строки должна быть $a$: $baaaaabbb$
+	\item Два последних символа должны быть $b$: $abababb$, $bbbbbb$
+	\item Первый и третий символы должны быть разными: $aabbbabab$, $baaabbbab$
+	\item Первый и последний символы должны быть одинковыми: $ababababa$, $babbbabab$
+\end{enumerate}
+
+\paragraph{Пример}
+\subparagraph{Задание}
+Символы a и b стоят парами: abbaabab, baabbaba.
+\subparagraph{Регулярное выражение}
+Регулярное выражение будет иметь вид: (ab|ba)+
+
+\subparagraph{Программа на lex}
+Создадим файл lab3.l со следующим содержимым:
+\begin{lstlisting}[language=c,{caption=lab3.l}]
+%%
+(ab|ba)+ { printf("Yes");}
+.* { printf("No"); }
+%%
+
+yyerror(char *str)
+{ printf(str); }
+
+main()
+{ yylex(); }
+\end{lstlisting}
+
+\subparagraph{Получение программы на c}
+Программу на c получим простой командой. lab.c - имя выходного файла, lab3.l имя входного файла на lex.
+\begin{lstlisting}[language=bash,{caption=трансляция}]
+flex -o lab3.c lab3.l
+\end{lstlisting}
+
+\subparagraph{Компиляция и запуск}
+Для компиляции воспользуемся компилятором gcc.
+\begin{lstlisting}[language=bash,{caption=компиляция и запуск}]
+gcc -o lab3 lab3.c -lfl
+./lab3
+
+ababbababa
+Yes
+
+bbbaa
+No	
+\end{lstlisting}
+
+
+\end{document}

@@ -21,16 +21,16 @@
 %%		headsep=1cm, footskip=1cm
 %%	]{geometry}
 
-\title{Лабораторная работа №2}
+\title{Лабораторная работа №3}
 \author{Кузнецов Д.Б.\and Вагин Д.А.}
-\date{09/2010}
+\date{10/2010}
 \pagestyle{empty}
 \pagestyle{fancy}
-\lhead{Лабораторная работа №2} %верхний колонтитул слева
+\lhead{Лабораторная работа №3} %верхний колонтитул слева
 
-\lstloadlanguages{c++,c}
+\lstloadlanguages{c++,c,tex,bash}
 \lstset{
-	language=c,inputencoding=utf8x,
+	language=tex,inputencoding=utf8x,
 	extendedchars=\true,captionpos=b,tabsize=4,
 	frame=lines,
 	keywordstyle=\color{blue},commentstyle=\color{green},stringstyle=\color{red},
@@ -39,35 +39,29 @@
 
 \begin{document}
 
-\paragraph{Построение лексического анализатора на основании автоматной грамматики}
+\paragraph{Построение лексического анализатора с использованием lex}
 \subparagraph{Цели}
 \begin{itemize}
-	\item Научитсья строить лексические анализаторы на основе автоматной грамматики
+	\item Познакомиться с «регулярными выражениями»
+	\item Познакомиться с программой lex
+	\item Научиться строить лексические анализаторы с использованием lex
 \end{itemize}
 
 \paragraph{Порядок выполнения}
 \begin{enumerate}
-	\item Построить автоматную грамматику
-	\item Построить автомат
-	\item Привести к детерминированному автомату
-	\item Реализовать автомат программно на языке программирования
+	\item Построить регулярное выражение
+	\item Составить файл для lex
+	\item Получить программу на Си
+	\item Откомпилировать и запустить
 	\item Написать отчет
 \end{enumerate}
-
-\subparagraph{Рекомендации по выполнению}
-\begin{itemize}
-	\item Массивы фиксированной длины
-	\item Данные задаются внутри исходного кода
-\end{itemize}
 
 \subparagraph{Состав отчета}
 \begin{itemize}
 	\item Титульный лист (фамилия, группа, номер варианта, наименование работы, задание)
 	\item Текст задания
-	\item Грамматика
-	\item Диаграмма переходов
-	\item Автоматы
-	\item Текст программы
+	\item Текст программы на lex
+	\item Результаты работы программы
 \end{itemize}
 
 \paragraph{Варианты заданий}
@@ -90,99 +84,42 @@
 \paragraph{Пример}
 \subparagraph{Задание}
 Символы a и b стоят парами: abbaabab, baabbaba.
-\subparagraph{Грамматика}
-Построим грамматику по заданию: \\
-$S -> aB$\\
-$S -> bA$\\
-$B -> bF$\\
-$A -> aF$\\
-$B -> bS$\\
-$A -> aS$\\
-$F -> \dashv $
+\subparagraph{Регулярное выражение}
+Регулярное выражение будет иметь вид: (ab|ba)+
 
-\subparagraph{Автомат}
-Построим диаграмму переходов \\
-\centering\includegraphics[scale=0.5]{images/image1.jpg}\vspace{1em}
-%% TODO: сделать диаграмму на latex'е
-\begin{tabular}[l]{c|cccc}
-    & $-$ & $-$   & $-$   & $+$ \\
-\hline
-    & $S$ & $A$   & $B$   & $F$ \\
-$a$ & $B$ & $S,F$ &       &     \\
-$b$ & $A$ &       & $S,F$ &     \\
-\end{tabular}
+\subparagraph{Программа на lex}
+Создадим файл lab3.l со следующим содержимым:
+\begin{lstlisting}[language=c,{caption=lab3.l}]
+%%
+(ab|ba)+ { printf("Yes");}
+.* { printf("No"); }
+%%
 
-\subparagraph{Детерминированный автомат}
-Перейдём к детерменированному автомату.\\
+yyerror(char *str)
+{ printf(str); }
 
-\begin{tabular}[l]{c|cccccc}
-    & $-$ & $-$       & $-$       & $+$    & $-$    & $+$       \\
-\hline
-    & $S$ & $A$       & $B$       & $F$    & $\{\}$ & $\{S,F\}$ \\
-$a$ & $B$ & $\{S,F\}$ &  $\{\}$   & $\{\}$ & $\{\}$ & $B$       \\
-$b$ & $A$ & $\{\}$    & $\{S,F\}$ & $\{\}$ & $\{\}$ & $A$       \\
-\end{tabular}
-
-\subparagraph{Программа}
-\begin{lstlisting}[language=c,{caption=анализатор}]
-#include <stdio.h>
-
-#define S  0 /* S */
-#define A  1 /* A */
-#define B  2 /* B */
-#define F  3 /* F */
-#define H  4 /* {S,F} */
-#define W  5 /* {} */
-
-#define P  1 /* + */
-#define M  0 /* - */
-
-#define a 0 /* a */
-#define b 1 /* b */
-
-struct action
-{
-	int sos; /* состояние */
-	int out; /* вывод */
-};
-
-int main()
-{
-	int table[2][6];
-	table[a][S] = B;
-	table[b][S] = A;
-	table[a][A] = H;
-	table[b][A] = W;
-	table[a][B] = W;
-	table[b][B] = H;
-	table[a][F] = W;
-	table[b][F] = W;
-	table[a][W] = W;
-	table[b][W] = W;
-	table[a][H] = B;
-	table[b][H] = A;
-
-	int output[6];
-	output[S] = M;
-	output[A] = M;
-	output[B] = M;
-	output[F] = P;
-	output[W] = M;
-	output[H] = P;
-
-
-	int input[]={b,a,a,b};
-	int n = 4, i;
-	int isos = S;
- 
-	for( i=0; i<n; ++i)
-	{
-		isos=table[input[i]][isos];
-	}
-
-	printf("%d\n", output[isos]);
-	return 0;
-}
+main()
+{ yylex(); }
 \end{lstlisting}
+
+\subparagraph{Получение программы на c}
+Программу на c получим простой командой. lab.c - имя выходного файла, lab3.l имя входного файла на lex.
+\begin{lstlisting}[language=bash,{caption=трансляция}]
+flex -o lab3.c lab3.l
+\end{lstlisting}
+
+\subparagraph{Компиляция и запуск}
+Для компиляции воспользуемся компилятором gcc.
+\begin{lstlisting}[language=bash,{caption=компиляция и запуск}]
+gcc -o lab3 lab3.c -lfl
+./lab3
+
+ababbababa
+Yes
+
+bbbaa
+No	
+\end{lstlisting}
+
 
 \end{document}

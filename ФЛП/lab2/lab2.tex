@@ -1,0 +1,204 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[T2A]{fontenc}
+\usepackage[utf8x]{inputenc}
+\usepackage[russian,english]{babel}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{fancyhdr}
+\usepackage{amsmath}
+\usepackage{indentfirst} % включить отступ у первого абзаца
+
+%%\usepackage[
+%%		a4paper, includefoot,
+%%		left=3cm, right=1cm, top=2cm, bottom=1.5cm,
+%%		headsep=1cm, footskip=1cm
+%%	]{geometry}
+
+\title{Лабораторная работа №2}
+\author{Вагин Д.А.}
+\date{02/2011}
+\pagestyle{empty}
+\pagestyle{fancy}
+\lhead{Лабораторная работа №2} %верхний колонтитул слева
+\rhead{\title}
+
+
+%%\lstset{language=c++,inputencoding=utf8x, extendedchars=\true,captionpos=b,tabsize=3,frame=lines,keywordstyle=\color{blue},commentstyle=\color{green},stringstyle=\color{red},numbers=left,numberstyle=\t	iny,numbersep=5pt,breaklines=true,showstringspaces=false,basicstyle=\footnotesize,emph={label}}
+
+\lstloadlanguages{lisp}
+\lstset{
+	language=lisp,inputencoding=utf8x,
+	extendedchars=\true,captionpos=b,tabsize=4,
+	frame=lines,
+	keywordstyle=\color{blue},commentstyle=\color{green},stringstyle=\color{red},
+	breaklines=true,showstringspaces=false,basicstyle=\footnotesize
+}
+
+\begin{document}
+
+%%\maketitle
+
+\paragraph{S-выражения в LISP}
+\subparagraph{Цели}
+\begin{itemize}
+	\item Освоить S-выражения
+	\item Научиться основам работы в clisp
+	\item Познакомиться с функциями обработки списков
+\end{itemize}
+
+\paragraph{Задание}
+\begin{enumerate}
+	\item Составить список по заданию в синтаксисе lisp
+	\item Написать функции для получения каждого из элементов списка №1
+	\item Написать функцию для получения списка №2
+\end{enumerate}
+
+\paragraph{Пример}
+\subparagraph{Задание}
+\begin{enumerate}
+	\item Список №1 - \{\{1,\{2,3,4,5,6,7,8\}\},9\}
+	\item Список №2 - \{2,8,3,\{4,1\},6\}
+\end{enumerate}
+
+\begin{lstlisting}[language=lisp,{caption=Задание 1}]
+'((1 (2 3 4 5 6 7 8)) 9)
+\end{lstlisting}
+
+\begin{lstlisting}[language=lisp,{caption=Задание 2}]
+(car '((1 (2 3 4 5 6 7 8)) 9))
+;; (1 (2 3 4 5 6 7 8))
+(car (car '((1 (2 3 4 5 6 7 8)) 9)))
+;; 1
+(car (cdr (car '((1 (2 3 4 5 6 7 8)) 9))))
+;; (2 3 4 5 6 7 8)
+(car (car (cdr (car '((1 (2 3 4 5 6 7 8)) 9)))))
+;; 2
+(setq a '((1 (2 3 4 5 6 7 8)) 9))
+;; ((1 (2 3 4 5 6 7 8)) 9)
+(car (car (cdr (car a))))
+;; 2
+(car (cdr (car (cdr (car a)))))
+;; 3
+(car (cdr (cdr (car (cdr (car a))))))
+;; ...
+\end{lstlisting}
+
+\begin{lstlisting}[language=lisp,{caption=Задание 3}]
+(cons 2	(cons 8 (cons 3 (cons (cons 4 (cons 1 nil)) (cons 6 nil)))))
+;;(2 8 3 (4 1) 6)
+\end{lstlisting}
+
+\subparagraph{Состав отчета}
+\begin{itemize}
+	\item Титульный лист (фамилия, группа, номер варианта, наименование работы, задание)
+	\item Текст рекурсивной функции
+	\item Результаты выполнения
+\end{itemize}
+
+\paragraph{Варианты заданий}
+\begin{enumerate}
+	\item \begin{enumerate}
+		\item Список №1 - \{1,\{2,3,4\},5,\{6,\{7,8\},9\}\}
+		\item Список №2 - \{2,8,\{3,4,1\},6\}
+	\end{enumerate}
+
+	\item \begin{enumerate}
+		\item Список №1 - \{\{1,2,\{3,4,5,6\},7\},8,9\}
+		\item Список №2 - \{2,\{8,3,4,1\},6\}
+	\end{enumerate}
+
+	\item \begin{enumerate}
+		\item Список №1 - \{\{\{1,2,3,4\},5,6,7,8\},9\}
+		\item Список №2 - \{\{7,8\},\{3,4\},\{1,6\}\}
+	\end{enumerate}
+
+	\item \begin{enumerate}
+		\item Список №1 - \{1,2,\{3,4,5\},\{\{6,7,8,9\}\}\}
+		\item Список №2 - \{\{2,8\},6,7,8,9\}
+	\end{enumerate}
+
+	\item \begin{enumerate}
+		\item Список №1 - \{1,2,\{3,4,5\},\{6,7,\{8,9\}\}\}
+		\item Список №2 - \{2,8,\{3,4,5\},6\}
+	\end{enumerate}
+
+	\item \begin{enumerate}
+		\item Список №1 - \{1,\{\{2,3,4\},5,6,7\},8,9\} 
+		\item Список №2 - \{2,\{\{8\},3,4,1,6\}\}
+	\end{enumerate}
+
+	\item \begin{enumerate}
+		\item Список №1 - \{1,\{2,3,\{4,5,6\},7,8\},9\}
+		\item Список №2 - \{2,\{8,3,4,\{1\}\},6\}
+	\end{enumerate}
+
+	\item \begin{enumerate}
+		\item Список №1 - \{\{\{1,2,3,4,\}5,6,7,8\},9\}
+		\item Список №2 - \{2,8,3,\{4,1\},6\}
+	\end{enumerate}
+
+	\item \begin{enumerate}
+		\item Список №1 - \{\{\{1,2,3,4,5,6,7,8\},9\}\}
+		\item Список №2 - \{2,8,3,4,\{1,6\}\}
+	\end{enumerate}
+
+	\item \begin{enumerate}
+		\item Список №1 - \{1,2,3,\{4,\{5,6,\{7,8,9\}\}\}\}
+		\item Список №2 - \{2,\{8,3\},4,1,6\}
+	\end{enumerate}
+
+	\item \begin{enumerate}
+		\item Список №1 - \{1,\{2,3,\{4,5,6,\{7,8\},9\}\}\}
+		\item Список №2 - \{2,8,3,4,\{\{1\},6\}\}
+	\end{enumerate}
+
+	\item \begin{enumerate}
+		\item Список №1 - \{1,\{\{2,3\},4,5,6\},7,8,9\}
+		\item Список №2 - \{\{2\},8,\{3,\{4,1\}\},6\}
+	\end{enumerate}
+
+	\item \begin{enumerate}
+		\item Список №1 - \{1,\{2,\{3\},4,5\},6,\{7,8\},9\}
+		\item Список №2 - \{2,\{\{8,3\},\{4,1\}\},6\}
+	\end{enumerate}
+
+	\item \begin{enumerate}
+		\item Список №1 - \{\{1,\{2\},3,4\},5,6,\{7,\{8,9\}\}\}
+		\item Список №2 - \{2,\{8,3,\{4\},1\},\{6\}\}
+	\end{enumerate}
+
+	\item \begin{enumerate}
+		\item Список №1 - \{1,\{2,3,\{4,5,\{6,\{7\}\}\},8\},9\}
+		\item Список №2 - \{2,\{8,\{3,\{4\}\},1\},6\}
+	\end{enumerate}
+
+	\item \begin{enumerate}
+		\item Список №1 - \{\{1\},2,\{3,4\},\{5,6,\{7,8\},9\}\}
+		\item Список №2 - \{\{2,8\},\{3,\{4,1\},6\}\}
+	\end{enumerate}
+
+	\item \begin{enumerate}
+		\item Список №1 - \{1,\{2,3\},4,\{5\},6,7,8,9\}
+		\item Список №2 - \{2,\{8\},\{3,4,\{1\}\},6\}
+	\end{enumerate}
+
+	\item \begin{enumerate}
+		\item Список №1 - \{1,2,\{3\},\{4\},\{5\},6,\{7,\{8\}\},9\}
+		\item Список №2 - \{\{2,\{8,3\},4,1\},\{6\}\}
+	\end{enumerate}
+
+	\item \begin{enumerate}
+		\item Список №1 - \{1,2,\{3,\{4\},5\},\{6,\{7\},8\},9\}
+		\item Список №2 - \{\{2,\{8,3,4,\{1\}\}\},6\}
+	\end{enumerate}
+
+	\item \begin{enumerate}
+		\item Список №1 - \{\{1,2\},\{\{3,\{4\},5\},\{6,\{7\},8\}\},\{9\}\}
+		\item Список №2 - \{2,\{\{8\},3,\{4,1\}\},\{6\}\}
+	\end{enumerate}
+
+\end{enumerate}
+\end{document}

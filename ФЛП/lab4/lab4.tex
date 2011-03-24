@@ -1,0 +1,108 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[T2A]{fontenc}
+\usepackage[utf8x]{inputenc}
+\usepackage[russian,english]{babel}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{fancyhdr}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{indentfirst} % включить отступ у первого абзаца
+
+%%\usepackage[
+%%		a4paper, includefoot,
+%%		left=3cm, right=1cm, top=2cm, bottom=1.5cm,
+%%		headsep=1cm, footskip=1cm
+%%	]{geometry}
+
+\title{Лабораторная работа №4}
+\author{Вагин Д.А.}
+\date{03/2011}
+\pagestyle{empty}
+\pagestyle{fancy}
+\lhead{Лабораторная работа №4} %верхний колонтитул слева
+\rhead{\title}
+
+
+%%\lstset{language=c++,inputencoding=utf8x, extendedchars=\true,captionpos=b,tabsize=3,frame=lines,keywordstyle=\color{blue},commentstyle=\color{green},stringstyle=\color{red},numbers=left,numberstyle=\t	iny,numbersep=5pt,breaklines=true,showstringspaces=false,basicstyle=\footnotesize,emph={label}}
+
+\lstloadlanguages{lisp}
+\lstset{
+	language=lisp,inputencoding=utf8x,
+	extendedchars=\true,captionpos=b,tabsize=4,
+	frame=lines,
+	keywordstyle=\color{blue},commentstyle=\color{green},stringstyle=\color{red},
+	breaklines=true,showstringspaces=false,basicstyle=\footnotesize
+}
+
+\begin{document}
+
+%%\maketitle
+
+\paragraph{$\lambda$-выражения и $\beta$-редукция в $\lambda$-исчислении в языке LISP}
+\subparagraph{Цели}
+\begin{itemize}
+	\item Постигнуть $\lambda$-исчисление
+\end{itemize}
+
+\paragraph{Задание}
+\begin{enumerate}
+	\item Выполнить $\beta$-редукции несколькими способами
+	\item Составить программу на LISP для вычисления функции
+\end{enumerate}
+
+\paragraph{Пример}
+\subparagraph{Задание}
+\[((((\lambda xyz.x(yz))(\lambda x.x\cdot 1))(\lambda x.x+x))2)\]
+
+\begin{lstlisting}[language=lisp,{caption=Программа на LISP}]
+( 
+  (lambda (x y z) (funcall x (funcall y z))) 
+  (lambda (x) (* x 1)) 
+  (lambda (x) (+ x x)) 
+2)
+
+;; результат
+4
+\end{lstlisting}
+
+\begin{align*}
+(((\lambda xyz.x(yz))(\lambda x.x))(\lambda x.x+x))2=\\
+=((\lambda yz.(\lambda x.x)(yz))(\lambda x.x+x))2 =\\
+=(\lambda z.(\lambda x.x)((\lambda x.x+x)z))2
+\end{align*}
+
+\[(\lambda x.x)((\lambda x.x+x)2)=(\lambda x.x+x)2=2+2=4\]
+\[(\lambda z.((\lambda x.x+x)z))2=(\lambda z.z+z)2=2+2=4\]
+
+
+\subparagraph{Состав отчета}
+\begin{itemize}
+	\item Титульный лист (фамилия, группа, номер варианта, наименование работы, задание)
+	\item Текст LISP программы
+	\item $\beta$-редукции
+\end{itemize}
+
+\paragraph{Варианты заданий}
+\begin{enumerate}
+	\item \[ ((((\lambda xyz.x(yz))(\lambda x.x+x))(\lambda x.x\cdot x))3) \]
+	\item \[ ((((\lambda xyz.x(yz))(\lambda x.x\cdot x))(\lambda x.x+x))4) \]
+  \item \[ ((((\lambda xyz.x(yz))(\lambda x.x\cdot x))(\lambda x.x\cdot x))5) \]
+	\item \[ ((((\lambda xyz.x(yz))(\lambda x.x+8))(\lambda x.9\cdot x))6) \]
+	\item \[ ((((\lambda xyz.x(yz))(\lambda x.x))(\lambda x.x\cdot x))7)\]
+	\item \[ ((((\lambda xyz.x(yz))(\lambda x.x+x))(\lambda x.x+x))8)\]
+	\item \[ (((((\lambda xyz.xzy))(\lambda xy.x\div y))3)9)\]
+	\item \[ (((((\lambda xyz.xzy))(\lambda xy.x\div y))((\lambda x.x)3))9)\]
+	\item \[ (((((\lambda xyz.xzy))(\lambda xy.x\div y))3)((\lambda x.x)9))\]
+	\item \[ ((((\lambda xyz.xz(yz)))(\lambda xy.x+y))(\lambda x.x+2)3)\]
+	\item \[ ((((\lambda xyz.xz(yz)))(\lambda xy.x))(\lambda x.x)4))\]
+	\item \[ ((((\lambda xyz.xz(yz)))(\lambda xy.y))(\lambda x.x+2)5)\]
+	\item \[ ((((\lambda xyz.xz(yz)))(\lambda xy.x\cdot y))(\lambda x.x+2)6)\]
+	\item \[ ((((\lambda xyz.xz(yz)))(\lambda xy.x+y))(\lambda x.x\cdot 2)7)\]
+	\item \[ ((((\lambda xyz.xz(yz)))(\lambda xy.x-y))(\lambda x.x-2)8)\]
+\end{enumerate}
+\end{document}

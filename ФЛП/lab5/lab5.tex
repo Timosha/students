@@ -1,0 +1,196 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[T2A]{fontenc}
+\usepackage[utf8x]{inputenc}
+\usepackage[russian,english]{babel}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{fancyhdr}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{indentfirst} % включить отступ у первого абзаца
+
+%%\usepackage[
+%%		a4paper, includefoot,
+%%		left=3cm, right=1cm, top=2cm, bottom=1.5cm,
+%%		headsep=1cm, footskip=1cm
+%%	]{geometry}
+
+\title{Лабораторная работа №5}
+\author{Вагин Д.А.}
+\date{03/2011}
+\pagestyle{empty}
+\pagestyle{fancy}
+\lhead{Лабораторная работа №5} %верхний колонтитул слева
+\rhead{\title}
+
+
+%%\lstset{language=c++,inputencoding=utf8x, extendedchars=\true,captionpos=b,tabsize=3,frame=lines,keywordstyle=\color{blue},commentstyle=\color{green},stringstyle=\color{red},numbers=left,numberstyle=\t	iny,numbersep=5pt,breaklines=true,showstringspaces=false,basicstyle=\footnotesize,emph={label}}
+
+\lstloadlanguages{haskell}
+\lstset{
+	language=haskell,inputencoding=utf8x,
+	extendedchars=\true,captionpos=b,tabsize=4,
+	frame=lines,
+	keywordstyle=\color{blue},commentstyle=\color{green},stringstyle=\color{red},
+	breaklines=true,showstringspaces=false,basicstyle=\footnotesize
+}
+
+\begin{document}
+
+%%\maketitle
+
+\paragraph{Основные возможности Haskell}
+\subparagraph{Цели}
+\begin{itemize}
+	\item Приобрести навыки работы с интерпретатором языка Haskell. Получить представление об основных типах языка Haskell. Научиться определять простейшие функции.
+\end{itemize}
+
+\paragraph{Задание}
+\begin{enumerate}
+	\item Изучить теоретические сведения
+	\item Выполнить задания в соответствии с вариантом
+\end{enumerate}
+
+\paragraph{Теоретические сведения}
+\subparagraph{Типы}
+\begin{itemize}
+	\item Типы Integer и Int используется для представления целых чисел, причем значения типа Integer не ограничены по длине.
+	\item Типы Float и Double используется для представления вещественных чисел.
+	\item Тип Bool содержит два значения: True и False, и предназначен для представления результата логических выражений.
+	\item  Тип Char используется для представления символов.
+\end{itemize}
+
+\subparagraph{Списки}
+Чтобы задать список в Haskell, необходимо в квадратных скобках перечислить его элементы через запятую. Все эти элементы должны принадлежать одному и тому же типу. Тип списка с элементами, принадлежащими типу a, обозначается как [a]. Примеры: [1,2]; ['1','2','3'].
+
+\subparagraph{Операции со списками}
+Оператор : (двоеточие) используется для добавления элемента в начало списка. Его левым аргументом должен быть элемент, а правым - список:
+\begin{lstlisting}[language=haskell,{caption=Пример}]
+> 1:[2,3]
+[1,2,3] :: [Integer]
+> '5':['1','2','3','4','5']
+['5','1','2','3','4','5'] :: [Char]
+> False:[]
+[False] :: [Bool]
+\end{lstlisting}
+
+С помощью оператора (:) и пустого списка можно построить любой список:
+\begin{lstlisting}[language=haskell,{caption=Пример}]
+> 1:(2:(3:[]))
+[1,2,3] :: Integer
+>1:2:3:[]
+[1,2,3] :: Integer
+\end{lstlisting}
+
+Элементами списка могут быть любые значения — числа, символы, кортежи, другие списки и т.д.
+\begin{lstlisting}[language=haskell,{caption=Пример}]
+> [(1,'a'),(2,'b')]
+[(1,'a'),(2,'b')] :: [(Integer,Char)]
+> [[1,2],[3,4,5]]
+[[1,2],[3,4,5]] :: [[Integer]]
+\end{lstlisting}
+
+Для работы со списками в языке Haskell существует большое количество функций. В данной лабораторной работе рассмотрим только некоторые из них.
+\begin{itemize}
+	\item Функция head возвращает первый элемент списка.
+	\item Функция tail возвращает список без первого элемента.
+	\item Функция length возвращает длину списка.
+\end{itemize}
+Функции head и tail определены для непустых списков. При попытке применить их к пустому списку интерпретатор сообщает об ошибке. Примеры работы с указанными функциями:
+
+\begin{lstlisting}[language=haskell,{caption=Пример}]
+> head [1,2,3]
+1 :: Integer
+> tail [1,2,3]
+[2,3] :: [Integer]
+> tail [1]
+[] :: Integer
+> length [1,2,3]
+3 :: Int
+\end{lstlisting}
+
+Для соединения (конкатенации) списков в Haskell определен оператор ++.
+\begin{lstlisting}[language=haskell,{caption=Пример}]
+> [1,2]++[3,4]
+[1,2,3,4] :: Integer
+\end{lstlisting}
+
+\subparagraph{Функции} Рассмотрим пример:
+
+\begin{lstlisting}[language=haskell,{caption=Пример}]
+square :: Integer -> Integer
+square x = x * x
+\end{lstlisting}
+Первая строка (square :: Integer -> Integer) объявляет, что мы определяем функцию square, принимающую параметр типа Integer и возвращающую результат типа Integer. Вторая строка (square x = x * x) является непосредственно определением функции. Функция square принимает один аргумент и возвращает его квадрат.
+
+В общем виде тип функции, принимающей n аргументов, принадлежащих типам t1, t2, . . . , tn, и возвращающей результат типа a, записывается в виде t1->t2->...->tn->a.
+\begin{lstlisting}[language=haskell,{caption=Пример}]
+add :: Integer -> Integer -> Integer
+add x y = x + y
+\end{lstlisting}
+
+\subparagraph{Условное выражение} В общем виде выглядит так: \\
+if условие then выражение else выражение.
+
+Функцию signum, вычисляющую знак переданного ей аргумента:
+\begin{lstlisting}[language=haskell,{caption=Пример}]
+signum :: Integer -> Integer
+signum x = if x > 0
+        then 1
+        else if x < 0
+                then -1
+                else 0
+\end{lstlisting}
+Следует обратить внимание на отступы. Именно по отступам компилятор определяет к какому if'у отностится тот или иной else.
+
+Условие в определении условного оператора представляет собой любое выражение типа Bool. Примером таких выражений могут служить сравнения. При сравнении можно использовать следующие операторы:
+\begin{itemize}
+	\item <, >, <=, >= - эти операторы имеют такой же смысл, как и в языке Си (меньше, больше, меньше или равно, больше или равно);
+	\item == - оператор проверки на равенство;
+	\item /= - оператор проверки на неравенство.
+\end{itemize}
+
+\paragraph{Пример}
+\subparagraph{Задание}
+Написать функцию на языке Haskell возвращающую знак переданного целого числа.
+\begin{lstlisting}[language=haskell,{caption=Пример}]
+signum :: Integer -> Integer
+signum x = if x > 0
+        then 1
+        else if x < 0
+                then -1
+                else 0
+
+main = print $ Prelude.signum 1
+\end{lstlisting}
+
+\subparagraph{Состав отчета}
+\begin{itemize}
+	\item Титульный лист (фамилия, группа, номер варианта, наименование работы, задание)
+	\item Текст программы на языке Haskell
+	\item Результат работы программы на языке Haskell
+\end{itemize}
+
+\paragraph{Варианты заданий}
+\begin{enumerate}
+	\item Функция max3, по трем целым возвращающая наибольшее из них.
+	\item Функция min3, по трем целым возвращающая наименьшее из них.
+	\item Функция sort2, по двум целым возвращающая пару, в которой наименьшее из них стоит на первом месте, а наибольшее - на втором.
+	\item Функция bothTrue :: Bool -> Bool -> Bool, которая возвращает True тогда и только тогда, когда оба ее аргумента будут равны True. Не используйте при определении функции стандартные логический операции  (\&\& , || и т.п.).
+	\item Функция     solve2::Double->Double->(Bool,Double), которая по двум числам, представляющим собой коэффициенты линейного уравнения ax + b = 0, возвращает пару, первый    элемент которой равен True, если решение существует и False в противном случае; при этом второй элемент равен либо значению корня, либо 0.0.
+	\item Функция isParallel, возвращающая True, если два отрезка, концы которых задаются в аргументах функции, параллельны (или лежат на одной прямой). Например, значение выражения isParallel (1,1) (2,2) (2,0) (4,2) должно быть равно True, поскольку отрезки (1, 1) - (2, 2) и (2, 0) - (4, 2) параллельны.
+	\item Функция isIncluded, аргументами которой служат параметры двух окружностей на плоскости (координаты центров и радиусы). Функция возвращает True, если вторая окружность целиком содержится внутри первой.
+ 	\item Функция isRectangular, принимающая в качестве параметров координаты трех точек на плоскости, и возвращающая True, если образуемый ими треугольник - прямоугольный.
+	\item Функция isTriangle, определяющая, можно ли их отрезков с заданными длинами x, y и z построить треугольник.
+	\item Функция isSorted, принимающая на вход три числа и возвращающая True, если они упорядочены по возрастанию или по убыванию.
+	\item Функция принимает два числа, и если их сумма чётна, то возвращает их разницу, иначе - сумму.
+	\item Функция принимает список и число, и добавляет число к списку.
+	\item Функция принимает список и число, и добавляет число к списку с конца.
+	\item Функция принимает 3 числа и возвращает список с этими числами
+	\item Функиця принимает 2 числа, и возвращает наиболшее кратное двойке.
+\end{enumerate}
+\end{document}

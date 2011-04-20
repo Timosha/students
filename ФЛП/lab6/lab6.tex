@@ -1,0 +1,110 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[T2A]{fontenc}
+\usepackage[utf8x]{inputenc}
+\usepackage[russian,english]{babel}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{fancyhdr}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{indentfirst} % включить отступ у первого абзаца
+
+%%\usepackage[
+%%		a4paper, includefoot,
+%%		left=3cm, right=1cm, top=2cm, bottom=1.5cm,
+%%		headsep=1cm, footskip=1cm
+%%	]{geometry}
+
+\title{Лабораторная работа №6}
+\author{Вагин Д.А.}
+\date{04/2011}
+\pagestyle{empty}
+\pagestyle{fancy}
+\lhead{Лабораторная работа №6} %верхний колонтитул слева
+\rhead{\title}
+
+
+%%\lstset{language=c++,inputencoding=utf8x, extendedchars=\true,captionpos=b,tabsize=3,frame=lines,keywordstyle=\color{blue},commentstyle=\color{green},stringstyle=\color{red},numbers=left,numberstyle=\t	iny,numbersep=5pt,breaklines=true,showstringspaces=false,basicstyle=\footnotesize,emph={label}}
+
+\lstloadlanguages{haskell}
+\lstset{
+	language=haskell,inputencoding=utf8x,
+	extendedchars=\true,captionpos=b,tabsize=4,
+	frame=lines,
+	keywordstyle=\color{blue},commentstyle=\color{green},stringstyle=\color{red},
+	breaklines=true,showstringspaces=false,basicstyle=\footnotesize
+}
+
+\begin{document}
+
+%%\maketitle
+
+\paragraph{Использование комбинаторов в языке Haskell}
+\subparagraph{Цели}
+\begin{itemize}
+	\item Познакомиться с комбинаторами на языке Haskell
+\end{itemize}
+
+\paragraph{Задание}
+\begin{enumerate}
+	\item Построить комбинаторы $i$, $b$, $k$, $c$, $w$, $s$;
+	\item функции $p\ x = x + 1$, $u\ x\ y = x + y$ (функции $p$ и $u$ могут быть использованы не более одного раза);
+	\item проверить их работоспособность;
+	\item построить выражение в соответствии с заданием.
+\end{enumerate}
+
+\paragraph{Пример}
+\subparagraph{Задание}
+Построить выражение 
+$v\ 6\ 7 = 7$
+
+\begin{lstlisting}[language=haskell,{caption=Пример}]
+i x = x
+k x y = x
+s x y z = x z (y z)
+b x y z = x (y z)
+c x y z = x z y
+w x y = x y y
+
+p x = x + 1
+u x y = x + y
+
+main = print $ k i 6 7
+\end{lstlisting}
+
+\subparagraph{Состав отчета}
+\begin{itemize}
+	\item Титульный лист (фамилия, группа, номер варианта, наименование работы, задание)
+	\item Текст программы на языке Haskell
+	\item Результат работы программы на языке Haskell
+\end{itemize}
+
+\paragraph{Варианты заданий}
+\begin{enumerate}
+	\item $v\ 6\ 7 = 7$
+	\item $v\ 6 = 8$
+	\item $v\ 5 = 10$
+	\item $v\ 4 = 9$
+	\item $v\ 3\ 5 = 9$
+	\item $v\ 4\ 7 = 5$
+	\item $v\ 3\ 4\ 5 = 9$
+	\item $v\ 7\ 2\ 6 = 2$
+	\item $v\ 8\ 2 = 3$
+	\item $v\ 8\ 7 = 14$
+	\item $v\ 7\ 9 = 14$
+	\item $v\ 2 = 4$
+	\item $v\ 9 = 18$
+	\item $v\ 5 = 11$
+	\item $v\ 2\ 6 = 9$
+	\item $v\ 3\ 5 = 4$
+	\item $v\ 8\ 2\ 5 = 7$
+	\item $v\ 7\ 3\ 6 = 3$
+	\item $v\ 8\ 1 = 2$
+	\item $v\ 8\ 6 = 12$
+	\item $v\ 4\ 9 = 8$
+\end{enumerate}
+\end{document}

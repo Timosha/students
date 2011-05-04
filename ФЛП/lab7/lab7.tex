@@ -1,0 +1,185 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[T2A]{fontenc}
+\usepackage[utf8x]{inputenc}
+\usepackage[russian,english]{babel}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{fancyhdr}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{indentfirst} % включить отступ у первого абзаца
+
+%%\usepackage[
+%%		a4paper, includefoot,
+%%		left=3cm, right=1cm, top=2cm, bottom=1.5cm,
+%%		headsep=1cm, footskip=1cm
+%%	]{geometry}
+
+\title{Лабораторная работа №7}
+\author{Вагин Д.А.}
+\date{05/2011}
+\pagestyle{empty}
+\pagestyle{fancy}
+\lhead{Лабораторная работа №7} %верхний колонтитул слева
+\rhead{\title}
+
+\lstloadlanguages{prolog}
+\lstset{
+	language=prolog,inputencoding=utf8x,
+	extendedchars=\true,captionpos=b,tabsize=4,
+	frame=lines,
+	keywordstyle=\color{blue},commentstyle=\color{green},stringstyle=\color{red},
+	breaklines=true,showstringspaces=false,basicstyle=\footnotesize
+}
+
+\begin{document}
+
+%%\maketitle
+
+\paragraph{Формализация предметной области для языка Пролог}
+\subparagraph{Цели}
+\begin{itemize}
+	\item Познакомиться языком Пролог
+\end{itemize}
+
+\paragraph{Задание}
+\begin{enumerate}
+	\item Для соответствующей варианту предметной области составить 3-5 аксиом.
+	\item Составить несколько вопросов.
+	\item Записать на языке Пролог.
+\end{enumerate}
+
+\paragraph{Пример}
+\subparagraph{Задание}
+\begin{itemize}
+	\item Предметная область: раковина;
+	\item описание предметной области: Раковина засоряется тем, что пропустит фильтр. Фильтр пропускает очистки морковки при использовании любых инструментов для чистки и очистки любого овощя очищенного картофелечисткой. Морковь почистили ножом, картофель - картофелечисткой;
+	\item вопросы: Чем засорится раковина? Засорится ли раковина?.
+\end{itemize}
+
+\subparagraph{Решение}
+Объявим предикаты
+\begin{itemize}
+	\item $C(x,y)$ - чистить икс игреком
+	\item $F(x)$ - фильтр пропустит х
+	\item $R(x)$ - раковина засорилась х
+\end{itemize}
+
+\begin{align*}
+A1&: F(x) \to R(x)\\
+A2&: C(x, kartochistka) \to F(x)\\
+A3&: C(morkva, y) \to F(morkva)\\
+A4&: C(morkva, nozh)\\
+A5&: C(kartofan, kartochistka)\\
+B1&: R(x)\\
+B2&: R(kartofan)\\
+\end{align*}
+
+Напишем программу на языке Пролог:
+\begin{lstlisting}[language=prolog,{caption=Пример}]
+r(X) :- f(X).
+f(X) :- c(X, 'kartochistka').
+f('morkva') :- c('morkva', _).
+c('morkva', 'nozh').
+c('kartofan', 'kartochistka').
+\end{lstlisting}
+
+Зададим пару вопросов программе:
+\begin{lstlisting}[language=prolog,{caption=Результат}]
+$ gprolog
+GNU Prolog 1.2.18
+By Daniel Diaz
+Copyright (C) 1999-2004 Daniel Diaz
+| ?- consult('rack.pl').
+compiling /home/kdb/prolog/rack.pl for byte code...
+/home/kdb/prolog/rack.pl compiled, 5 lines read - 739 bytes written, 25 ms
+
+yes
+| ?- r('morkva').
+
+yes
+| ?- r(X).
+
+X = kartofan ? a
+
+X = morkva
+
+yes
+| ?- trace.
+The debugger will first creep -- showing everything (trace)
+
+yes
+
+{trace}
+| ?- r('kartofan').
+      1    1  Call: r(kartofan) ? 
+      2    2  Call: f(kartofan) ? 
+      3    3  Call: c(kartofan,kartochistka) ? 
+      3    3  Exit: c(kartofan,kartochistka) ? 
+      2    2  Exit: f(kartofan) ? 
+      1    1  Exit: r(kartofan) ? 
+
+yes
+{trace}
+| ?- r(X).         
+      1    1  Call: r(_16) ? 
+      2    2  Call: f(_16) ? 
+      3    3  Call: c(_16,kartochistka) ? 
+      3    3  Exit: c(kartofan,kartochistka) ? 
+      2    2  Exit: f(kartofan) ? 
+      1    1  Exit: r(kartofan) ? 
+
+X = kartofan ?  a
+      1    1  Redo: r(kartofan) ? 
+      2    2  Redo: f(kartofan) ? 
+      3    3  Call: c(morkva,_69) ? 
+      3    3  Exit: c(morkva,nozh) ? 
+      2    2  Exit: f(morkva) ? 
+      1    1  Exit: r(morkva) ? 
+
+X = morkva
+
+yes
+{trace}
+| ?- 
+\end{lstlisting}
+
+\subparagraph{Состав отчета}
+\begin{itemize}
+	\item Титульный лист (фамилия, группа, номер варианта, наименование работы, задание)
+	\item Задание
+	\item Аксиомы
+	\item Вопросы
+	\item Программа на языке Пролог
+\end{itemize}
+
+\paragraph{Варианты заданий}
+\begin{enumerate}
+	\item книжный шкаф
+	\item зоопарк
+	\item театр
+	\item цирк
+	\item телевизор
+	\item баня
+	\item таблица умножения
+	\item сдача экзамена
+	\item ноутбук
+	\item файловая система
+	\item правительства
+	\item система прав пользователей
+	\item продуктовый магазин
+	\item учебная аудитория
+	\item родственники
+	\item структура каталогов
+	\item арифметические действия
+	\item текст
+	\item гипертекст
+	\item холодильник
+	\item лес
+	\item огород
+\end{enumerate}
+\end{document}

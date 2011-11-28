@@ -1,0 +1,220 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[T2A]{fontenc}
+\usepackage[utf8x]{inputenc}
+\usepackage[russian,english]{babel}
+\usepackage{amssymb,amsfonts,amsmath,cite,enumerate,float,indentfirst}
+\usepackage{color}
+
+\usepackage{listings}
+\lstloadlanguages{c++,c}
+\lstset{
+        language=c,inputencoding=utf8x,
+        extendedchars=\true,captionpos=b,tabsize=4,
+        frame=lines,
+        keywordstyle=\color{blue},commentstyle=\color{green},stringstyle=\color{red},
+        breaklines=true,showstringspaces=false,basicstyle=\footnotesize
+}
+
+\usepackage[dvips]{graphicx} 
+\graphicspath{{images/}}
+
+\usepackage{geometry} % Меняем поля страницы
+\geometry{left=2cm}% левое поле
+\geometry{right=1.5cm}% правое поле
+\geometry{top=1cm}% верхнее поле
+\geometry{bottom=2cm}% нижнее поле
+
+
+\renewcommand{\theenumi}{\arabic{enumi}}% Меняем везде перечисления на цифра.цифра
+\renewcommand{\labelenumi}{\arabic{enumi}}% Меняем везде перечисления на цифра.цифра
+\renewcommand{\theenumii}{.\arabic{enumii}}% Меняем везде перечисления на цифра.цифра
+\renewcommand{\labelenumii}{\arabic{enumi}.\arabic{enumii}.}% Меняем везде перечисления на цифра.цифра
+\renewcommand{\theenumiii}{.\arabic{enumiii}}% Меняем везде перечисления на цифра.цифра
+\renewcommand{\labelenumiii}{\arabic{enumi}.\arabic{enumii}.\arabic{enumiii}.}% Меняем везде перечисления 
+
+
+\title{Лабораторная работа №1}
+\author{Кузнецов Д.Б.\and Вагин Д.А.}
+\date{09/2010}
+
+%%\lstset{language=c++,inputencoding=utf8x, extendedchars=\true,captionpos=b,tabsize=3,frame=lines,keywordstyle=\color{blue},commentstyle=\color{green},stringstyle=\color{red},numbers=left,numberstyle=\t	iny,numbersep=5pt,breaklines=true,showstringspaces=false,basicstyle=\footnotesize,emph={label}}
+
+\begin{document}
+
+\begin{titlepage}
+\newpage
+
+\begin{center}
+Федеральное агентство по образованию РФ\\
+Пермский государственный технический университет\\
+Кафедра Информационных технологий и автоматизированных систем
+\end{center}
+
+\vspace{8em}
+
+\begin{center}
+\Large Кузнецов Д.Б., Вагин Д.А.
+\end{center}
+
+\vspace{2em}
+
+\begin{center}
+\Huge \textbf{Функциональное и логическое программирование}
+\end{center}
+\begin{center}
+Методические указания по выполниению лабораторных работ\\
+для специальностей АСУ и ПОВТ
+\end{center}
+
+
+
+\vspace{\fill}
+
+\begin{center}
+г. Пермь 2010
+\end{center}
+
+\end{titlepage}
+
+\newpage
+\section{Введение}
+Предлагаемый лабораторный практикум предназначен для освоения 
+основных принципов программирования на функциональных языках программирования 
+LISP и Haskell, и логическом языке программирования Prolog.
+
+
+
+
+\newpage
+\section{Лабораторная работа №1.\\Сравнение циклов и рекурсии}
+\paragraph{}
+\subparagraph{Цели}
+\begin{itemize}
+	\item Оценить недостатки процедурного программирования
+	\item Научиться строить рекурсивные алгоритмы
+\end{itemize}
+
+\paragraph{Порядок выполнения}
+\begin{enumerate}
+	\item Написать программу по заданию с использованием цикла
+	\item Провести трассировку программы
+	\item Составить рекурсивную функцию для решения выданного задания
+	\item Реализовать составленную рекурсивную функцию на языке программирования
+	\item Написать отчет
+\end{enumerate}
+
+\subparagraph{Рекомендации по выполнению}
+\begin{itemize}
+	\item Массивы фиксированной длины
+	\item Трассировка отключается макросом
+	\item Данные задаются внутри исходного кода
+\end{itemize}
+
+\subparagraph{Состав отчета}
+\begin{itemize}
+	\item Титульный лист (фамилия, группа, номер варианта, наименование работы, задание)
+	\item Текст рекурсивной функции
+	\item Текст итеративной функции
+	\item Результаты выполнения
+\end{itemize}
+
+\paragraph{Варианты заданий}
+\begin{enumerate}
+	\item Напишите программу печатающую $n$-ое число Фибоначчи.
+	\item Напишите программу вычисляющую факториал натурального числа.
+	\item Напишите программу перемножающую два целых неотрицательных числа без использования операции умножения.
+	\item Напишите программу, печатающую значение многочлена степени $n\geq0$ в заданной точке $x_{0}$. Коэффициенты многочлена хранятся в массиве $a$ в порядке убывания степений и являются целыми числами, так же как и значение $x_{0}$.
+	\item Напишите программу печатающую значение производной многочлена степени $n\geq0$ в заданной точке $x_{0}$. Коэффициенты многочлена хранятся в массиве $a$ в порядке убывания степений и являются целыми числами, так же как и значение $x_{0}$.
+	\item Напишите программу возводящую целое число в целую неотрицательную степень.
+	\item Напишите программу принимающую на вход натуральное число и выводающую Yes если число является простым, и No - если не является.
+	\item Напишите программу генерации всех правильных скобочных структур длины $2n$. Например для $n=3$ таких структур может быть 5: ()()(), (())(), ()(()), ((())), (()()).
+	\item Имеется три стержня А, В, С. На стержень А нанизано $n$ дисков радиуса $1, 2,..., n$ таким образом, что диск радиуса $i$ является $i$-м сверху. Требуется переместить все диски на стержень В, сохраняя их порядок расположения (диск с большим радиусом находится ниже). За один раз можно перемещать только один диск с любого стержня на любой другой стержень. При этом должно выполняться следующее условие: на каждом стержне ни в какой момент времени никакой диск не может находиться выше диска с меньшим радиусом. 
+	\item Напишите программу выводящую сумму квадратов всех натуральных чисел от 1 до введённого $n$.
+	\item Напишите программу печатающую $n$-ое простое число.
+	\item Напишите программу, печатающую старшую цифру в десятичной записи введенного натурального числа.
+	\item Напишите программу, печатающую количество цифр в десятичной записи введенного натурального числа.
+	\item Напишите программу, печатающую количество натуральных решений неравенства $x^{2}+y^{2}<n$ для введенного $n$.
+	\item Напишите программу, вводящую натуральное число , и печатающую количество точек с целочисленными координатами внутри замкнутого шара радиуса с центром в начале координат.
+	\item Напишите программу, печатающую квадраты всех целых чисел от нуля до введенного натурального $n$, не использующую операций умножения.
+	\item Напишите программу, находящую количество счастливых билетов с шестизначными номерами. Билет называется счастливым, если сумма его первых трех цифр равна сумме трех последних.
+\end{enumerate}
+
+\paragraph{Пример}
+\subparagraph{Задание}
+Напишите программу проверяющую является ли введённое число факториалом какого либо числа.
+\subparagraph{Итеративное решение}
+Возьмём математическое определение факториала:
+\begin{equation}
+n! = 1\cdot 2\cdot\ldots\cdot n =\prod_{i=1}^n i
+\end{equation}
+Получается что факториал числа $n$ должен делиться нацело на все натуральные числа до $n$ включая $n$. Напишем программу рализующую такую проверку:
+
+\begin{lstlisting}[language=c,{caption=итеративная программа}]
+#include <stdio.h>
+
+int check_factorial_iterate(int number){
+	if(number < 0) 
+		return 0;
+	if(number == 0) 
+		return 1;
+	int i = 1;
+	int n = 1;
+	for(;n<number;n*=i,i++){
+		
+		if(number%i != 0)
+			return 0;
+	}
+	return 1;
+}
+
+int main(){
+	if(check_factorial_iterate(362880))
+		printf("%s","yes");
+	else
+		printf("%s","no");
+	return 0;
+}
+\end{lstlisting}
+
+\subparagraph{Рекурсивное решение}
+Возьмём рекурсивное определение факториала:
+\begin{equation}
+n!= \begin{cases}
+1 & n = 0,\\
+n \cdot (n-1)! & n > 0.
+\end{cases}
+\end{equation}
+
+\begin{lstlisting}[language=c,{caption=рекурсивная программа}]
+#include <stdio.h>
+
+int check_factorial_recursive(int number, int i){
+	if(number < 0) 
+		return 0;	
+	if(number == 0)
+		return 1;
+
+	if(number == 1)
+		return 1;
+	
+	if( number%i != 0)
+		return 0;
+	else		
+		return check_factorial_recursive(number/i,i+1);
+	
+}
+
+int main(){
+	int number = 362881;
+
+	if(check_factorial_recursive(number,1))
+		printf("%s\n","yes");
+	else
+		printf("%s\n","no");
+
+	return 0;
+}
+\end{lstlisting}
+
+\end{document}

@@ -7,45 +7,6 @@
 \usepackage{color}
 
 \usepackage{listings}
-\lstloadlanguages{c++,c,lisp}
-\lstset{
-        language=c,inputencoding=utf8x,
-        extendedchars=\true,captionpos=b,tabsize=4,
-        frame=lines,
-        keywordstyle=\color{blue},commentstyle=\color{green},stringstyle=\color{red},
-        breaklines=true,showstringspaces=false,basicstyle=\footnotesize
-}
-
-\lstset{
-	language=lisp,inputencoding=utf8x,
-	extendedchars=\true,captionpos=b,tabsize=4,
-	frame=lines,
-	keywordstyle=\color{blue},commentstyle=\color{green},stringstyle=\color{red},
-	breaklines=true,showstringspaces=false,basicstyle=\footnotesize
-}
-
-\usepackage[dvips]{graphicx} 
-\graphicspath{{images/}}
-
-\usepackage{geometry} % Меняем поля страницы
-\geometry{left=2cm}% левое поле
-\geometry{right=1.5cm}% правое поле
-\geometry{top=1cm}% верхнее поле
-\geometry{bottom=2cm}% нижнее поле
-
-
-\renewcommand{\theenumi}{\arabic{enumi}}% Меняем везде перечисления на цифра.цифра
-\renewcommand{\labelenumi}{\arabic{enumi}}% Меняем везде перечисления на цифра.цифра
-\renewcommand{\theenumii}{.\arabic{enumii}}% Меняем везде перечисления на цифра.цифра
-\renewcommand{\labelenumii}{\arabic{enumi}.\arabic{enumii}.}% Меняем везде перечисления на цифра.цифра
-\renewcommand{\theenumiii}{.\arabic{enumiii}}% Меняем везде перечисления на цифра.цифра
-\renewcommand{\labelenumiii}{\arabic{enumi}.\arabic{enumii}.\arabic{enumiii}.}% Меняем везде перечисления 
-
-
-\title{Лабораторная работа №1}
-\author{Кузнецов Д.Б.\and Вагин Д.А.}
-\date{09/2010}
-
 \lstloadlanguages{c++,c,lisp,haskell,prolog}
 \lstset{
 	language=c,inputencoding=utf8x,
@@ -77,6 +38,24 @@
 	breaklines=true,showstringspaces=false,basicstyle=\footnotesize
 }
 
+
+\usepackage{geometry} % Меняем поля страницы
+\geometry{left=2cm}% левое поле
+\geometry{right=1.5cm}% правое поле
+\geometry{top=1cm}% верхнее поле
+\geometry{bottom=2cm}% нижнее поле
+
+\renewcommand{\theenumi}{\arabic{enumi}}% Меняем везде перечисления на цифра.цифра
+\renewcommand{\labelenumi}{\arabic{enumi}}% Меняем везде перечисления на цифра.цифра
+\renewcommand{\theenumii}{.\arabic{enumii}}% Меняем везде перечисления на цифра.цифра
+\renewcommand{\labelenumii}{\arabic{enumi}.\arabic{enumii}.}% Меняем везде перечисления на цифра.цифра
+\renewcommand{\theenumiii}{.\arabic{enumiii}}% Меняем везде перечисления на цифра.цифра
+\renewcommand{\labelenumiii}{\arabic{enumi}.\arabic{enumii}.\arabic{enumiii}.}% Меняем везде перечисления 
+
+
+\title{Лабораторная работа №1}
+\author{Кузнецов Д.Б.\and Вагин Д.А.}
+\date{09/2010}
 
 \begin{document}
 
@@ -226,7 +205,9 @@ int main(){
 \end{lstlisting}
 
 \subsubsection{Рекурсивное решение}
+
 Возьмём рекурсивное определение факториала:
+
 \begin{equation}
 n!= \begin{cases}
 1 & n = 0,\\

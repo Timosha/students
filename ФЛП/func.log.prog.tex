@@ -1,0 +1,1033 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[T2A]{fontenc}
+\usepackage[utf8x]{inputenc}
+\usepackage[russian,english]{babel}
+\usepackage{amssymb,amsfonts,amsmath,cite,enumerate,float,indentfirst}
+\usepackage{color}
+
+\usepackage{listings}
+\lstloadlanguages{c++,c,lisp}
+\lstset{
+        language=c,inputencoding=utf8x,
+        extendedchars=\true,captionpos=b,tabsize=4,
+        frame=lines,
+        keywordstyle=\color{blue},commentstyle=\color{green},stringstyle=\color{red},
+        breaklines=true,showstringspaces=false,basicstyle=\footnotesize
+}
+
+\lstset{
+	language=lisp,inputencoding=utf8x,
+	extendedchars=\true,captionpos=b,tabsize=4,
+	frame=lines,
+	keywordstyle=\color{blue},commentstyle=\color{green},stringstyle=\color{red},
+	breaklines=true,showstringspaces=false,basicstyle=\footnotesize
+}
+
+\usepackage[dvips]{graphicx} 
+\graphicspath{{images/}}
+
+\usepackage{geometry} % Меняем поля страницы
+\geometry{left=2cm}% левое поле
+\geometry{right=1.5cm}% правое поле
+\geometry{top=1cm}% верхнее поле
+\geometry{bottom=2cm}% нижнее поле
+
+
+\renewcommand{\theenumi}{\arabic{enumi}}% Меняем везде перечисления на цифра.цифра
+\renewcommand{\labelenumi}{\arabic{enumi}}% Меняем везде перечисления на цифра.цифра
+\renewcommand{\theenumii}{.\arabic{enumii}}% Меняем везде перечисления на цифра.цифра
+\renewcommand{\labelenumii}{\arabic{enumi}.\arabic{enumii}.}% Меняем везде перечисления на цифра.цифра
+\renewcommand{\theenumiii}{.\arabic{enumiii}}% Меняем везде перечисления на цифра.цифра
+\renewcommand{\labelenumiii}{\arabic{enumi}.\arabic{enumii}.\arabic{enumiii}.}% Меняем везде перечисления 
+
+
+\title{Лабораторная работа №1}
+\author{Кузнецов Д.Б.\and Вагин Д.А.}
+\date{09/2010}
+
+\lstloadlanguages{c++,c,lisp,haskell,prolog}
+\lstset{
+	language=c,inputencoding=utf8x,
+	extendedchars=\true,captionpos=b,tabsize=4,
+	frame=lines,
+	keywordstyle=\color{blue},commentstyle=\color{green},stringstyle=\color{red},
+	breaklines=true,showstringspaces=false,basicstyle=\footnotesize
+}
+
+\lstset{
+	language=haskell,inputencoding=utf8x,
+	extendedchars=\true,captionpos=b,tabsize=4,
+	frame=lines,
+	keywordstyle=\color{blue},commentstyle=\color{green},stringstyle=\color{red},
+	breaklines=true,showstringspaces=false,basicstyle=\footnotesize
+}
+\lstset{
+	language=lisp,inputencoding=utf8x,
+	extendedchars=\true,captionpos=b,tabsize=4,
+	frame=lines,
+	keywordstyle=\color{blue},commentstyle=\color{green},stringstyle=\color{red},
+	breaklines=true,showstringspaces=false,basicstyle=\footnotesize
+}
+\lstset{
+	language=prolog,inputencoding=utf8x,
+	extendedchars=\true,captionpos=b,tabsize=4,
+	frame=lines,
+	keywordstyle=\color{blue},commentstyle=\color{green},stringstyle=\color{red},
+	breaklines=true,showstringspaces=false,basicstyle=\footnotesize
+}
+
+
+\begin{document}
+
+\begin{titlepage}
+\newpage
+
+\begin{center}
+Федеральное агентство по образованию РФ\\
+Пермский Национальный Исследовательский Политехнический Университет\\
+Кафедра Информационных Технологий и Автоматизированных Систем
+\end{center}
+
+\vspace{8em}
+
+\begin{center}
+\Large Кузнецов Д.Б., Вагин Д.А.
+\end{center}
+
+\vspace{2em}
+
+\begin{center}
+\Huge \textbf{Функциональное и логическое программирование}
+\end{center}
+\begin{center}
+Методические указания по выполниению лабораторных работ\\
+для специальностей АСУ и ПОВТ
+\end{center}
+
+
+
+\vspace{\fill}
+
+\begin{center}
+г. Пермь 2011
+\end{center}
+
+\end{titlepage}
+
+\newpage
+\section{Введение}
+Предлагаемый лабораторный практикум предназначен для освоения 
+основных принципов программирования на функциональных языках программирования 
+LISP и Haskell, и логическом языке программирования Prolog.
+
+\subsection{Требования к аппаратному обеспечению}
+
+\paragraph{Вариант 1: Выполненние работ на локальном компьютере}
+Компьютер должен обеспечивать возможность запуска операционной системы, текстового редактора, и средств компиляции исходного кода. Необходимо иметь 200МБ свободного места на жёстком диске для установки необходимого по и хранения исходных текстов программ.
+
+\paragraph{Вариант 2: Выполненние работ на удалённом сервере}
+Сервер должен иметь технические характеристики достаточные для запуска операционной системы и сервисов для удалённого подключения. Более точные аппартные характеристики зависят от версии ядра и системных библиотек. Для запуска последних версий без графического режима вполне достаточно процессор с частотой от 300 МГц, ОЗУ от 512 МБ, свободно дисковое пространство от 500 МБ. Локальное рабочее место должно быть оборудовано терминалом, подключенным к серверу.
+
+\subsection{Требования к системному программному обеспечению}
+Рассмариваемое ниже системное программное обеспечение должно быть установлено на локальном компьютере (Вариант 1 аппаратного обеспечения) или на сервере (Вариант 2 аппаратного обеспечения).
+\paragraph{}
+Для выполнения лабораторных работ потребуется инструментарий для сборки компиляции программ на С или С++ (GNU make, GNU gcc, Microsoft Visual Studio, и т.д.), интерпретатор языка LISP (clisp, autolisp, и т.д.), компилятор языка Haskell (ghc), интерпретатор языка Prolog (gprolog). 
+
+\newpage
+\section{Лабораторная работа №1.\\Сравнение циклов и рекурсии}
+\subsection{Цели}
+\begin{itemize}
+	\item Оценить недостатки процедурного программирования
+	\item Научиться строить рекурсивные алгоритмы
+\end{itemize}
+
+\subsection{Порядок выполнения}
+\begin{enumerate}
+	\item Написать программу по заданию с использованием цикла
+	\item Провести трассировку программы
+	\item Составить рекурсивную функцию для решения выданного задания
+	\item Реализовать составленную рекурсивную функцию на языке программирования
+	\item Написать отчет
+\end{enumerate}
+
+\subsection{Рекомендации по выполнению}
+\begin{itemize}
+	\item Массивы фиксированной длины
+	\item Трассировка отключается макросом
+	\item Данные задаются внутри исходного кода
+\end{itemize}
+
+\subsection{Состав отчета}
+\begin{itemize}
+	\item Титульный лист (фамилия, группа, номер варианта, наименование работы, задание)
+	\item Текст рекурсивной функции
+	\item Текст итеративной функции
+	\item Результаты выполнения
+\end{itemize}
+
+\subsection{Варианты заданий}
+\begin{enumerate}
+	\item Напишите программу печатающую $n$-ое число Фибоначчи.
+	\item Напишите программу вычисляющую факториал натурального числа.
+	\item Напишите программу перемножающую два целых неотрицательных числа без использования операции умножения.
+	\item Напишите программу, печатающую значение многочлена степени $n\geq0$ в заданной точке $x_{0}$. Коэффициенты многочлена хранятся в массиве $a$ в порядке убывания степений и являются целыми числами, так же как и значение $x_{0}$.
+	\item Напишите программу печатающую значение производной многочлена степени $n\geq0$ в заданной точке $x_{0}$. Коэффициенты многочлена хранятся в массиве $a$ в порядке убывания степений и являются целыми числами, так же как и значение $x_{0}$.
+	\item Напишите программу возводящую целое число в целую неотрицательную степень.
+	\item Напишите программу принимающую на вход натуральное число и выводающую Yes если число является простым, и No - если не является.
+	\item Напишите программу генерации всех правильных скобочных структур длины $2n$. Например для $n=3$ таких структур может быть 5: ()()(), (())(), ()(()), ((())), (()()).
+	\item Имеется три стержня А, В, С. На стержень А нанизано $n$ дисков радиуса $1, 2,..., n$ таким образом, что диск радиуса $i$ является $i$-м сверху. Требуется переместить все диски на стержень В, сохраняя их порядок расположения (диск с большим радиусом находится ниже). За один раз можно перемещать только один диск с любого стержня на любой другой стержень. При этом должно выполняться следующее условие: на каждом стержне ни в какой момент времени никакой диск не может находиться выше диска с меньшим радиусом. 
+	\item Напишите программу выводящую сумму квадратов всех натуральных чисел от 1 до введённого $n$.
+	\item Напишите программу печатающую $n$-ое простое число.
+	\item Напишите программу, печатающую старшую цифру в десятичной записи введенного натурального числа.
+	\item Напишите программу, печатающую количество цифр в десятичной записи введенного натурального числа.
+	\item Напишите программу, печатающую количество натуральных решений неравенства $x^{2}+y^{2}<n$ для введенного $n$.
+	\item Напишите программу, вводящую натуральное число , и печатающую количество точек с целочисленными координатами внутри замкнутого шара радиуса с центром в начале координат.
+	\item Напишите программу, печатающую квадраты всех целых чисел от нуля до введенного натурального $n$, не использующую операций умножения.
+	\item Напишите программу, находящую количество счастливых билетов с шестизначными номерами. Билет называется счастливым, если сумма его первых трех цифр равна сумме трех последних.
+\end{enumerate}
+
+\subsection{Пример}
+\paragraph{Задание:}
+Напишите программу проверяющую является ли введённое число факториалом какого либо числа.
+\subsubsection{Итеративное решение}
+Возьмём математическое определение факториала:
+\begin{equation}
+n! = 1\cdot 2\cdot\ldots\cdot n =\prod_{i=1}^n i
+\end{equation}
+
+Получается что факториал числа $n$ должен делиться нацело на все натуральные числа до $n$ включая $n$. Напишем программу рализующую такую проверку:
+
+\begin{lstlisting}[language=c,{caption=итеративная программа}]
+#include <stdio.h>
+
+int check_factorial_iterate(int number){
+	if(number < 0) 
+		return 0;
+	if(number == 0) 
+		return 1;
+	int i = 1;
+	int n = 1;
+	for(;n<number;n*=i,i++){
+		
+		if(number%i != 0)
+			return 0;
+	}
+	return 1;
+}
+
+int main(){
+	if(check_factorial_iterate(362880))
+		printf("%s","yes");
+	else
+		printf("%s","no");
+	return 0;
+}
+\end{lstlisting}
+
+\subsubsection{Рекурсивное решение}
+Возьмём рекурсивное определение факториала:
+\begin{equation}
+n!= \begin{cases}
+1 & n = 0,\\
+n \cdot (n-1)! & n > 0.
+\end{cases}
+\end{equation}
+
+\begin{lstlisting}[language=c,{caption=рекурсивная программа}]
+#include <stdio.h>
+
+int check_factorial_recursive(int number, int i){
+	if(number < 0) 
+		return 0;	
+	if(number == 0)
+		return 1;
+
+	if(number == 1)
+		return 1;
+	
+	if( number%i != 0)
+		return 0;
+	else		
+		return check_factorial_recursive(number/i,i+1);
+	
+}
+
+int main(){
+	int number = 362881;
+
+	if(check_factorial_recursive(number,1))
+		printf("%s\n","yes");
+	else
+		printf("%s\n","no");
+
+	return 0;
+}
+\end{lstlisting}
+
+\newpage
+\section{Лабораторная работа №2\\S-выражения в LISP}
+\subsection{Цели}
+
+\begin{itemize}
+	\item Освоить S-выражения
+	\item Научиться основам работы в clisp
+	\item Познакомиться с функциями обработки списков
+\end{itemize}
+
+\subsection{Задание}
+\begin{enumerate}
+	\item Составить список по заданию в синтаксисе lisp
+	\item Написать функции для получения каждого из элементов списка №1
+	\item Написать функцию для получения списка №2
+\end{enumerate}
+
+\subsection{Пример}
+\paragraph{Задание}
+\begin{enumerate}
+	\item Список №1 - \{\{1,\{2,3,4,5,6,7,8\}\},9\}
+	\item Список №2 - \{2,8,3,\{4,1\},6\}
+\end{enumerate}
+
+\begin{lstlisting}[language=lisp,{caption=Задание 1}]
+'((1 (2 3 4 5 6 7 8)) 9)
+\end{lstlisting}
+
+\begin{lstlisting}[language=lisp,{caption=Задание 2}]
+(car '((1 (2 3 4 5 6 7 8)) 9))
+;; (1 (2 3 4 5 6 7 8))
+(car (car '((1 (2 3 4 5 6 7 8)) 9)))
+;; 1
+(car (cdr (car '((1 (2 3 4 5 6 7 8)) 9))))
+;; (2 3 4 5 6 7 8)
+(car (car (cdr (car '((1 (2 3 4 5 6 7 8)) 9)))))
+;; 2
+(setq a '((1 (2 3 4 5 6 7 8)) 9))
+;; ((1 (2 3 4 5 6 7 8)) 9)
+(car (car (cdr (car a))))
+;; 2
+(car (cdr (car (cdr (car a)))))
+;; 3
+(car (cdr (cdr (car (cdr (car a))))))
+;; ...
+\end{lstlisting}
+
+\begin{lstlisting}[language=lisp,{caption=Задание 3}]
+(cons 2	(cons 8 (cons 3 (cons (cons 4 (cons 1 nil)) (cons 6 nil)))))
+;;(2 8 3 (4 1) 6)
+\end{lstlisting}
+
+\subsection{Состав отчета}
+\begin{itemize}
+	\item Титульный лист (фамилия, группа, номер варианта, наименование работы, задание)
+	\item Текст рекурсивной функции
+	\item Результаты выполнения
+\end{itemize}
+
+\subsection{Варианты заданий}
+\begin{enumerate}
+	\item \begin{itemize}
+		\item Список №1 - \{1,\{2,3,4\},5,\{6,\{7,8\},9\}\}
+		\item Список №2 - \{2,8,\{3,4,1\},6\}
+	\end{itemize}
+
+	\item \begin{itemize}
+		\item Список №1 - \{\{1,2,\{3,4,5,6\},7\},8,9\}
+		\item Список №2 - \{2,\{8,3,4,1\},6\}
+	\end{itemize}
+
+	\item \begin{itemize}
+		\item Список №1 - \{\{\{1,2,3,4\},5,6,7,8\},9\}
+		\item Список №2 - \{\{7,8\},\{3,4\},\{1,6\}\}
+	\end{itemize}
+
+	\item \begin{itemize}
+		\item Список №1 - \{1,2,\{3,4,5\},\{\{6,7,8,9\}\}\}
+		\item Список №2 - \{\{2,8\},6,7,8,9\}
+	\end{itemize}
+
+	\item \begin{itemize}
+		\item Список №1 - \{1,2,\{3,4,5\},\{6,7,\{8,9\}\}\}
+		\item Список №2 - \{2,8,\{3,4,5\},6\}
+	\end{itemize}
+
+	\item \begin{itemize}
+		\item Список №1 - \{1,\{\{2,3,4\},5,6,7\},8,9\} 
+		\item Список №2 - \{2,\{\{8\},3,4,1,6\}\}
+	\end{itemize}
+
+	\item \begin{itemize}
+		\item Список №1 - \{1,\{2,3,\{4,5,6\},7,8\},9\}
+		\item Список №2 - \{2,\{8,3,4,\{1\}\},6\}
+	\end{itemize}
+
+	\item \begin{itemize}
+		\item Список №1 - \{\{\{1,2,3,4,\}5,6,7,8\},9\}
+		\item Список №2 - \{2,8,3,\{4,1\},6\}
+	\end{itemize}
+
+	\item \begin{itemize}
+		\item Список №1 - \{\{\{1,2,3,4,5,6,7,8\},9\}\}
+		\item Список №2 - \{2,8,3,4,\{1,6\}\}
+	\end{itemize}
+
+	\item \begin{itemize}
+		\item Список №1 - \{1,2,3,\{4,\{5,6,\{7,8,9\}\}\}\}
+		\item Список №2 - \{2,\{8,3\},4,1,6\}
+	\end{itemize}
+
+	\item \begin{itemize}
+		\item Список №1 - \{1,\{2,3,\{4,5,6,\{7,8\},9\}\}\}
+		\item Список №2 - \{2,8,3,4,\{\{1\},6\}\}
+	\end{itemize}
+
+	\item \begin{itemize}
+		\item Список №1 - \{1,\{\{2,3\},4,5,6\},7,8,9\}
+		\item Список №2 - \{\{2\},8,\{3,\{4,1\}\},6\}
+	\end{itemize}
+
+	\item \begin{itemize}
+		\item Список №1 - \{1,\{2,\{3\},4,5\},6,\{7,8\},9\}
+		\item Список №2 - \{2,\{\{8,3\},\{4,1\}\},6\}
+	\end{itemize}
+
+	\item \begin{itemize}
+		\item Список №1 - \{\{1,\{2\},3,4\},5,6,\{7,\{8,9\}\}\}
+		\item Список №2 - \{2,\{8,3,\{4\},1\},\{6\}\}
+	\end{itemize}
+
+	\item \begin{itemize}
+		\item Список №1 - \{1,\{2,3,\{4,5,\{6,\{7\}\}\},8\},9\}
+		\item Список №2 - \{2,\{8,\{3,\{4\}\},1\},6\}
+	\end{itemize}
+
+	\item \begin{itemize}
+		\item Список №1 - \{\{1\},2,\{3,4\},\{5,6,\{7,8\},9\}\}
+		\item Список №2 - \{\{2,8\},\{3,\{4,1\},6\}\}
+	\end{itemize}
+
+	\item \begin{itemize}
+		\item Список №1 - \{1,\{2,3\},4,\{5\},6,7,8,9\}
+		\item Список №2 - \{2,\{8\},\{3,4,\{1\}\},6\}
+	\end{itemize}
+
+	\item \begin{itemize}
+		\item Список №1 - \{1,2,\{3\},\{4\},\{5\},6,\{7,\{8\}\},9\}
+		\item Список №2 - \{\{2,\{8,3\},4,1\},\{6\}\}
+	\end{itemize}
+
+	\item \begin{itemize}
+		\item Список №1 - \{1,2,\{3,\{4\},5\},\{6,\{7\},8\},9\}
+		\item Список №2 - \{\{2,\{8,3,4,\{1\}\}\},6\}
+	\end{itemize}
+
+	\item \begin{itemize}
+		\item Список №1 - \{\{1,2\},\{\{3,\{4\},5\},\{6,\{7\},8\}\},\{9\}\}
+		\item Список №2 - \{2,\{\{8\},3,\{4,1\}\},\{6\}\}
+	\end{itemize}
+
+\end{enumerate}
+
+\newpage
+\section{Лабораторная работа №3\\Функции в LISP}
+
+\subsection{Цели}
+\begin{itemize}
+	\item Познакомиться именованными фунциями
+	\item Познакомиться с анонимными функциями
+\end{itemize}
+
+\subsection{Задание}
+\begin{enumerate}
+	\item Написать функцию по первому заданию
+	\item Написать функцию принимающую в качестве аргумента список заданного вида и возвращающую список такого же вида, но с изменёнными значениями.
+	\item Написать анонимную функцию, которая передаётся парметром в функцию из второго задания, и выполняет некоторые действия над элементами списка.
+\end{enumerate}
+
+\subsection{Пример}
+\paragraph{Задание}
+\begin{enumerate}
+	\item Функция принимает два аргумента и возвращает их сумму.
+	\item Функция принимает список вида (x x x x x ... ) и увличивает каждый элемент списка на 1.
+	\item Написать анонимную функцию которая преобразует каждый элемент в список.\\ ((x) (x) (x)...)
+\end{enumerate}
+
+\begin{lstlisting}[language=lisp,{caption=Задание 1}]
+(defun summa (a b) 
+	(+ a b)
+)
+
+;; пример 
+(summa 4 5)
+\end{lstlisting}
+
+\begin{lstlisting}[language=lisp,{caption=Задание 2}]
+(defun mapx (x) 
+	(if x
+		(cons (+ (car x) 1) (mapx (cdr x)))
+		nil
+	)
+)
+;; пример вызова
+(mapx '(1 2 3 4))
+\end{lstlisting}
+
+\begin{lstlisting}[language=lisp,{caption=Задание 3}]
+(defun mapx (x f) 
+	(if x
+		(cons (funcall f (car x)) (mapx (cdr x) f))
+		nil
+	)
+)
+;; пример вызова
+(mapx '(1 2 3 4) (lambda (x)(+ x 1)))
+\end{lstlisting}
+
+\subsection{Состав отчета}
+\begin{itemize}
+	\item Титульный лист (фамилия, группа, номер варианта, наименование работы, задание)
+	\item Текст рекурсивной функции
+	\item Результаты выполнения
+\end{itemize}
+
+\subsection{Варианты заданий}
+\begin{enumerate}
+	\item \begin{itemize}
+		\item Функция принимает два числа, и если их сумма чётна, то возвращает их разницу, иначе - сумму.
+		\item Дан список ((x x) (x x) (x x) ... ). Увеличить каждый элемент на единицу.
+		\item Объеденить каждый подсписок суммированием: ((1 2) (1 3) (3 4)) -> ((3) (4) (7))
+	\end{itemize}
+
+	\item \begin{itemize}
+		\item Функция принимает два числа и возвращает наибольшее из них
+		\item Дан список ((x x x x ...) (x x x x ...)). Увеличить каждый элемент на единицу
+		\item Умножить каждый элемент на произвольное число
+	\end{itemize}
+
+	\item \begin{itemize}
+		\item Функция принимает 3 числа и возвращает список с этими числами
+		\item Дан список (x (x (x (x...)))). Увеличить каждый элемент на единицу
+		\item Умножить каждый элемент на 2
+	\end{itemize}
+
+	\item \begin{itemize}
+		\item Функция принимает 1 число и возвращает квадрат этого числа если оно чётное, и куб, если нечётное
+		\item Дан список ((((... x) x) x) x). Увеличить каждый элемент на единицу
+		\item Поделить каждый элемент на 2
+	\end{itemize}
+
+	\item \begin{itemize}
+		\item Функция принимает 2 числа и возвращает их произведение, если их сумма чётна, и квадрат первого, если сумма нечётна
+		\item Дан список ((x (x (x))) (x (x (x))) (x (x (x))) ... ). Увеличить каждый элемент на единицу
+		\item Увеличить каждый элемент в 2 раза
+	\end{itemize}
+
+	\item \begin{itemize}
+		\item Функция принимает список и число, и добавляет число к списку.
+		\item Дан список ((x x x) (x x x) ... ). Увеличить каждый элемент на единицу.
+		\item Объеденить каждый подсписок суммированием:\\ ((1 2 1) (1 3 2) (3 4 1)) -> ((4) (6) (8))
+	\end{itemize}
+
+	\item \begin{itemize}
+		\item Функция принимает список 3 числа и возвращает список вида (x (x (x)))
+		\item Дан список ((x) (x) ... ). Увеличить каждый элемент на единицу.
+		\item Преобразовать список в простой список элементов: ((1) (3) (4)) -> (1 3 4)
+	\end{itemize}
+
+	\item \begin{itemize}
+		\item Функция принимает список 3 числа и возвращает список вида (((x) x) x)
+		\item Дан список ((x (x x)) (x (x x)) ... ). Увеличить каждый элемент на единицу.
+		\item Увеличить каждый элемент в произвольное число раз
+	\end{itemize}
+
+	\item \begin{itemize}
+		\item Функция принимает список 3 числа и возвращает список вида ((x) x (x))
+		\item Дан список (((x) x (x)) ((x) x (x)) ... ). Увеличить каждый элемент на единицу.
+		\item Увеличить каждый элемент в произвольное число раз
+	\end{itemize}
+
+	\item \begin{itemize}
+		\item Функция принимает список 3 числа и возвращает список вида (x (x) x)
+		\item Дан список (((x) (x)) ((x) (x)) ... ). Увеличить каждый элемент на единицу.
+		\item Увеличить каждый элемент в произвольное число раз
+	\end{itemize}
+
+	\item \begin{itemize}
+		\item Функция принимает список 3 числа и возвращает список вида ((x) x (x))
+		\item Дан список ((x) (x) ... ). Увеличить каждый элемент на единицу.
+		\item Увеличить каждый элемент в произвольное число раз
+	\end{itemize}
+
+	\item \begin{itemize}
+		\item Функция принимает два числа и возвращает наименьшее из них
+		\item Дан список ((((... x) x) x) x). Увеличить каждый элемент на 2.
+		\item Увеличить каждый элемент в произвольное число раз
+	\end{itemize}
+
+	\item \begin{itemize}
+		\item Функция принимает список и число, и добавляет число к списку с конца.
+		\item Дан список ((x) (x) ... ). Увеличить каждый элемент на единицу.
+		\item Поделить каждый элемент на 2
+	\end{itemize}
+
+	\item \begin{itemize}
+		\item Функция принимает 3 числа и возвращает список с этими числами
+		\item Дан список ((x) (x) ... ). Увеличить каждый элемент на единицу.
+		\item Умножить каждый чётный элемент на произвольное число
+	\end{itemize}
+
+	\item \begin{itemize}
+		\item Функция принимает два числа и возвращает первое, если оно кратно второму, и второе, если не кратно.
+		\item Дан список ((x x x x ...) (x x x x ...)). Увеличить каждый элемент на единицу
+		\item Объеденить каждый подсписок суммированием:\\((1 2 1...) (1 3 2 ...) (3 4 1 ...)) -> ((4) (6) (8))
+	\end{itemize}
+
+\end{enumerate}
+
+\newpage
+\section{Лабораторная работа №4 \\ 
+	$\lambda$-выражения и $\beta$-редукция в $\lambda$-исчислении в языке LISP}
+\subsection{Цели}
+\begin{itemize}
+	\item Изучить $\lambda$-исчисление
+	\item Изучить $\beta$-редукцию в $\lambda$-исчислении
+\end{itemize}
+
+\section{Задание}
+\begin{enumerate}
+	\item Выполнить $\beta$-редукции несколькими способами
+	\item Составить программу на LISP для вычисления функции
+\end{enumerate}
+
+\subsection{Пример}
+\paragraph{Задание}
+\[((((\lambda xyz.x(yz))(\lambda x.x\cdot 1))(\lambda x.x+x))2)\]
+
+\begin{lstlisting}[language=lisp,{caption=Программа на LISP}]
+( 
+  (lambda (x y z) (funcall x (funcall y z))) 
+  (lambda (x) (* x 1)) 
+  (lambda (x) (+ x x)) 
+2)
+
+;; результат
+4
+\end{lstlisting}
+
+\begin{align*}
+(((\lambda xyz.x(yz))(\lambda x.x))(\lambda x.x+x))2=\\
+=((\lambda yz.(\lambda x.x)(yz))(\lambda x.x+x))2 =\\
+=(\lambda z.(\lambda x.x)((\lambda x.x+x)z))2
+\end{align*}
+
+\[(\lambda x.x)((\lambda x.x+x)2)=(\lambda x.x+x)2=2+2=4\]
+\[(\lambda z.((\lambda x.x+x)z))2=(\lambda z.z+z)2=2+2=4\]
+
+
+\subsection{Состав отчета}
+\begin{itemize}
+	\item Титульный лист (фамилия, группа, номер варианта, наименование работы, задание)
+	\item Текст LISP программы
+	\item $\beta$-редукции
+\end{itemize}
+
+\paragraph{Варианты заданий}
+\begin{enumerate}
+	\item \[ ((((\lambda xyz.x(yz))(\lambda x.x+x))(\lambda x.x\cdot x))3) \]
+	\item \[ ((((\lambda xyz.x(yz))(\lambda x.x\cdot x))(\lambda x.x+x))4) \]
+	\item \[ ((((\lambda xyz.x(yz))(\lambda x.x\cdot x))(\lambda x.x\cdot x))5) \]
+	\item \[ ((((\lambda xyz.x(yz))(\lambda x.x+8))(\lambda x.9\cdot x))6) \]
+	\item \[ ((((\lambda xyz.x(yz))(\lambda x.x))(\lambda x.x\cdot x))7)\]
+	\item \[ ((((\lambda xyz.x(yz))(\lambda x.x+x))(\lambda x.x+x))8)\]
+	\item \[ (((((\lambda xyz.xzy))(\lambda xy.x\div y))3)9)\]
+	\item \[ (((((\lambda xyz.xzy))(\lambda xy.x\div y))((\lambda x.x)3))9)\]
+	\item \[ (((((\lambda xyz.xzy))(\lambda xy.x\div y))3)((\lambda x.x)9))\]
+	\item \[ ((((\lambda xyz.xz(yz)))(\lambda xy.x+y))(\lambda x.x+2)3)\]
+	\item \[ ((((\lambda xyz.xz(yz)))(\lambda xy.x))(\lambda x.x)4))\]
+	\item \[ ((((\lambda xyz.xz(yz)))(\lambda xy.y))(\lambda x.x+2)5)\]
+	\item \[ ((((\lambda xyz.xz(yz)))(\lambda xy.x\cdot y))(\lambda x.x+2)6)\]
+	\item \[ ((((\lambda xyz.xz(yz)))(\lambda xy.x+y))(\lambda x.x\cdot 2)7)\]
+	\item \[ ((((\lambda xyz.xz(yz)))(\lambda xy.x-y))(\lambda x.x-2)8)\]
+\end{enumerate}
+
+
+\newpage
+\section{Лабораторная работа №5 \\
+	Основные возможности Haskell}
+\subsection{Цели}
+\begin{itemize}
+	\item Приобрести навыки работы с интерпретатором языка Haskell. Получить представление об основных типах языка Haskell. Научиться определять простейшие функции.
+\end{itemize}
+
+\subsection{Задание}
+\begin{enumerate}
+	\item Изучить теоретические сведения
+	\item Выполнить задания в соответствии с вариантом
+\end{enumerate}
+
+\subsection{Теоретические сведения}
+\subsubsection{Типы}
+\begin{itemize}
+	\item Типы Integer и Int используется для представления целых чисел, причем значения типа Integer не ограничены по длине.
+	\item Типы Float и Double используется для представления вещественных чисел.
+	\item Тип Bool содержит два значения: True и False, и предназначен для представления результата логических выражений.
+	\item  Тип Char используется для представления символов.
+\end{itemize}
+
+\subsubsection{Списки}
+Чтобы задать список в Haskell, необходимо в квадратных скобках перечислить его элементы через запятую. Все эти элементы должны принадлежать одному и тому же типу. Тип списка с элементами, принадлежащими типу a, обозначается как [a]. Примеры: [1,2]; ['1','2','3'].
+
+\paragraph{Операции со списками}
+Оператор : (двоеточие) используется для добавления элемента в начало списка. Его левым аргументом должен быть элемент, а правым - список:
+
+\begin{lstlisting}[language=haskell,{caption=Пример}]
+> 1:[2,3]
+[1,2,3] :: [Integer]
+> '5':['1','2','3','4','5']
+['5','1','2','3','4','5'] :: [Char]
+> False:[]
+[False] :: [Bool]
+\end{lstlisting}
+
+С помощью оператора (:) и пустого списка можно построить любой список:
+
+\begin{lstlisting}[language=haskell,{caption=Пример}]
+> 1:(2:(3:[]))
+[1,2,3] :: Integer
+>1:2:3:[]
+[1,2,3] :: Integer
+\end{lstlisting}
+
+Элементами списка могут быть любые значения — числа, символы, кортежи, другие списки и т.д.
+
+\begin{lstlisting}[language=haskell,{caption=Пример}]
+> [(1,'a'),(2,'b')]
+[(1,'a'),(2,'b')] :: [(Integer,Char)]
+> [[1,2],[3,4,5]]
+[[1,2],[3,4,5]] :: [[Integer]]
+\end{lstlisting}
+
+Для работы со списками в языке Haskell существует большое количество функций. В данной лабораторной работе рассмотрим только некоторые из них.
+
+\begin{itemize}
+	\item Функция head возвращает первый элемент списка.
+	\item Функция tail возвращает список без первого элемента.
+	\item Функция length возвращает длину списка.
+\end{itemize}
+
+Функции head и tail определены для непустых списков. При попытке применить их к пустому списку интерпретатор сообщает об ошибке. Примеры работы с указанными функциями:
+
+\begin{lstlisting}[language=haskell,{caption=Пример}]
+> head [1,2,3]
+1 :: Integer
+> tail [1,2,3]
+[2,3] :: [Integer]
+> tail [1]
+[] :: Integer
+> length [1,2,3]
+3 :: Int
+\end{lstlisting}
+
+Для соединения (конкатенации) списков в Haskell определен оператор ++.
+
+\begin{lstlisting}[language=haskell,{caption=Пример}]
+> [1,2]++[3,4]
+[1,2,3,4] :: Integer
+\end{lstlisting}
+
+\subsubsection{Функции} Рассмотрим пример:
+
+\begin{lstlisting}[language=haskell,{caption=Пример}]
+square :: Integer -> Integer
+square x = x * x
+\end{lstlisting}
+
+Первая строка (square :: Integer -> Integer) объявляет, что мы определяем функцию square, принимающую параметр типа Integer и возвращающую результат типа Integer. Вторая строка (square x = x * x) является непосредственно определением функции. Функция square принимает один аргумент и возвращает его квадрат.
+
+В общем виде тип функции, принимающей n аргументов, принадлежащих типам t1, t2, . . . , tn, и возвращающей результат типа a, записывается в виде t1->t2->...->tn->a.
+
+\begin{lstlisting}[language=haskell,{caption=Пример}]
+add :: Integer -> Integer -> Integer
+add x y = x + y
+\end{lstlisting}
+
+\subparagraph{Условное выражение} В общем виде выглядит так: \\
+if условие then выражение else выражение.
+
+Функцию signum, вычисляющую знак переданного ей аргумента:
+
+\begin{lstlisting}[language=haskell,{caption=Пример}]
+signum :: Integer -> Integer
+signum x = if x > 0
+        then 1
+        else if x < 0
+                then -1
+                else 0
+\end{lstlisting}
+
+Следует обратить внимание на отступы. Именно по отступам компилятор определяет к какому 
+if'у отностится тот или иной else.
+
+Условие в определении условного оператора представляет собой любое выражение типа Bool. Примером таких выражений могут служить сравнения. При сравнении можно использовать следующие операторы:
+
+\begin{itemize}
+	\item <, >, <=, >= - эти операторы имеют такой же смысл, как и в языке Си (меньше, больше, меньше или равно, больше или равно);
+	\item == - оператор проверки на равенство;
+	\item /= - оператор проверки на неравенство.
+\end{itemize}
+
+\subsection{Пример}
+\paragraph{Задание}
+Написать функцию на языке Haskell возвращающую знак переданного целого числа.
+
+\begin{lstlisting}[language=haskell,{caption=Пример}]
+signum :: Integer -> Integer
+signum x = if x > 0
+        then 1
+        else if x < 0
+                then -1
+                else 0
+
+main = print $ Prelude.signum 1
+\end{lstlisting}
+
+\subsection{Состав отчета}
+\begin{itemize}
+	\item Титульный лист (фамилия, группа, номер варианта, наименование работы, задание)
+	\item Текст программы на языке Haskell
+	\item Результат работы программы на языке Haskell
+\end{itemize}
+
+\subsection{Варианты заданий}
+\begin{enumerate}
+	\item Функция max3, по трем целым возвращающая наибольшее из них.
+	\item Функция min3, по трем целым возвращающая наименьшее из них.
+	\item Функция sort2, по двум целым возвращающая пару, в которой наименьшее из них стоит на первом месте, а наибольшее - на втором.
+	\item Функция bothTrue :: Bool -> Bool -> Bool, которая возвращает True тогда и только тогда, когда оба ее аргумента будут равны True. Не используйте при определении функции стандартные логический операции  (\&\& , || и т.п.).
+	\item Функция     solve2::Double->Double->(Bool,Double), которая по двум числам, представляющим собой коэффициенты линейного уравнения ax + b = 0, возвращает пару, первый    элемент которой равен True, если решение существует и False в противном случае; при этом второй элемент равен либо значению корня, либо 0.0.
+	\item Функция isParallel, возвращающая True, если два отрезка, концы которых задаются в аргументах функции, параллельны (или лежат на одной прямой). Например, значение выражения isParallel (1,1) (2,2) (2,0) (4,2) должно быть равно True, поскольку отрезки (1, 1) - (2, 2) и (2, 0) - (4, 2) параллельны.
+	\item Функция isIncluded, аргументами которой служат параметры двух окружностей на плоскости (координаты центров и радиусы). Функция возвращает True, если вторая окружность целиком содержится внутри первой.
+ 	\item Функция isRectangular, принимающая в качестве параметров координаты трех точек на плоскости, и возвращающая True, если образуемый ими треугольник - прямоугольный.
+	\item Функция isTriangle, определяющая, можно ли их отрезков с заданными длинами x, y и z построить треугольник.
+	\item Функция isSorted, принимающая на вход три числа и возвращающая True, если они упорядочены по возрастанию или по убыванию.
+	\item Функция принимает два числа, и если их сумма чётна, то возвращает их разницу, иначе - сумму.
+	\item Функция принимает список и число, и добавляет число к списку.
+	\item Функция принимает список и число, и добавляет число к списку с конца.
+	\item Функция принимает 3 числа и возвращает список с этими числами
+	\item Функиця принимает 2 числа, и возвращает наиболшее кратное двойке.
+\end{enumerate}
+
+\newpage
+\subsection{Лабораторная работа №6 \\ Использование комбинаторов в языке Haskell}
+\subsection{Цели}
+\begin{itemize}
+	\item Познакомиться с комбинаторами на языке Haskell
+\end{itemize}
+
+\subsection{Задание}
+\begin{enumerate}
+	\item Построить комбинаторы $i$, $b$, $k$, $c$, $w$, $s$;
+	\item функции $p\ x = x + 1$, $u\ x\ y = x + y$ (функции $p$ и $u$ могут быть использованы не более одного раза);
+	\item проверить их работоспособность;
+	\item построить выражение в соответствии с заданием.
+\end{enumerate}
+
+\subsection{Пример}
+\paragraph{Задание}
+
+Построить выражение 
+$v\ 6\ 7 = 7$
+
+\begin{lstlisting}[language=haskell,{caption=Пример}]
+i x = x
+k x y = x
+s x y z = x z (y z)
+b x y z = x (y z)
+c x y z = x z y
+w x y = x y y
+
+p x = x + 1
+u x y = x + y
+
+main = print $ k i 6 7
+\end{lstlisting}
+
+\subsection{Состав отчета}
+\begin{itemize}
+	\item Титульный лист (фамилия, группа, номер варианта, наименование работы, задание)
+	\item Текст программы на языке Haskell
+	\item Результат работы программы на языке Haskell
+\end{itemize}
+
+\subsection{Варианты заданий}
+\begin{enumerate}
+	\item $v\ 6\ 7 = 7$
+	\item $v\ 6 = 8$
+	\item $v\ 5 = 10$
+	\item $v\ 4 = 9$
+	\item $v\ 3\ 5 = 9$
+	\item $v\ 4\ 7 = 5$
+	\item $v\ 3\ 4\ 5 = 9$
+	\item $v\ 7\ 2\ 6 = 2$
+	\item $v\ 8\ 2 = 3$
+	\item $v\ 8\ 7 = 14$
+	\item $v\ 7\ 9 = 14$
+	\item $v\ 2 = 4$
+	\item $v\ 9 = 18$
+	\item $v\ 5 = 11$
+	\item $v\ 2\ 6 = 9$
+	\item $v\ 3\ 5 = 4$
+	\item $v\ 8\ 2\ 5 = 7$
+	\item $v\ 7\ 3\ 6 = 3$
+	\item $v\ 8\ 1 = 2$
+	\item $v\ 8\ 6 = 12$
+	\item $v\ 4\ 9 = 8$
+\end{enumerate}
+
+\newpage
+\section{Лабораторная работа №7 \\ 
+	Формализация предметной области для языка Пролог}
+\subsection{Цели}
+\begin{itemize}
+	\item Познакомиться языком Пролог
+\end{itemize}
+
+\subsection{Задание}
+\begin{enumerate}
+	\item Для соответствующей варианту предметной области составить 3-5 аксиом.
+	\item Составить несколько вопросов.
+	\item Записать на языке Пролог.
+\end{enumerate}
+
+\subsection{Пример}
+\paragraph{Задание}
+\begin{itemize}
+	\item Предметная область: раковина;
+	\item описание предметной области: Раковина засоряется тем, что пропустит фильтр. Фильтр пропускает очистки морковки при использовании любых инструментов для чистки и очистки любого овощя очищенного картофелечисткой. Морковь почистили ножом, картофель - картофелечисткой;
+	\item вопросы: Чем засорится раковина? Засорится ли раковина?.
+\end{itemize}
+
+\paragraph{Решение} Объявим предикаты
+\begin{itemize}
+	\item $C(x,y)$ - чистить икс игреком
+	\item $F(x)$ - фильтр пропустит х
+	\item $R(x)$ - раковина засорилась х
+\end{itemize}
+
+\begin{align*}
+A1&: F(x) \to R(x)\\
+A2&: C(x, kartochistka) \to F(x)\\
+A3&: C(morkva, y) \to F(morkva)\\
+A4&: C(morkva, nozh)\\
+A5&: C(kartofan, kartochistka)\\
+B1&: R(x)\\
+B2&: R(kartofan)\\
+\end{align*}
+
+Напишем программу на языке Пролог:
+
+\begin{lstlisting}[language=prolog,{caption=Пример}]
+r(X) :- f(X).
+f(X) :- c(X, 'kartochistka').
+f('morkva') :- c('morkva', _).
+c('morkva', 'nozh').
+c('kartofan', 'kartochistka').
+\end{lstlisting}
+
+Зададим пару вопросов программе:
+
+\begin{lstlisting}[language=prolog,{caption=Результат}]
+$ gprolog
+GNU Prolog 1.2.18
+By Daniel Diaz
+Copyright (C) 1999-2004 Daniel Diaz
+| ?- consult('rack.pl').
+compiling /home/kdb/prolog/rack.pl for byte code...
+/home/kdb/prolog/rack.pl compiled, 5 lines read - 739 bytes written, 25 ms
+
+yes
+| ?- r('morkva').
+
+yes
+| ?- r(X).
+
+X = kartofan ? a
+
+X = morkva
+
+yes
+| ?- trace.
+The debugger will first creep -- showing everything (trace)
+
+yes
+
+{trace}
+| ?- r('kartofan').
+      1    1  Call: r(kartofan) ? 
+      2    2  Call: f(kartofan) ? 
+      3    3  Call: c(kartofan,kartochistka) ? 
+      3    3  Exit: c(kartofan,kartochistka) ? 
+      2    2  Exit: f(kartofan) ? 
+      1    1  Exit: r(kartofan) ? 
+
+yes
+{trace}
+| ?- r(X).         
+      1    1  Call: r(_16) ? 
+      2    2  Call: f(_16) ? 
+      3    3  Call: c(_16,kartochistka) ? 
+      3    3  Exit: c(kartofan,kartochistka) ? 
+      2    2  Exit: f(kartofan) ? 
+      1    1  Exit: r(kartofan) ? 
+
+X = kartofan ?  a
+      1    1  Redo: r(kartofan) ? 
+      2    2  Redo: f(kartofan) ? 
+      3    3  Call: c(morkva,_69) ? 
+      3    3  Exit: c(morkva,nozh) ? 
+      2    2  Exit: f(morkva) ? 
+      1    1  Exit: r(morkva) ? 
+
+X = morkva
+
+yes
+{trace}
+| ?- 
+\end{lstlisting}
+
+\subsection{Состав отчета}
+\begin{itemize}
+	\item Титульный лист (фамилия, группа, номер варианта, наименование работы, задание)
+	\item Задание
+	\item Аксиомы
+	\item Вопросы
+	\item Программа на языке Пролог
+\end{itemize}
+
+\subsection{Варианты заданий}
+\begin{enumerate}
+	\item книжный шкаф
+	\item зоопарк
+	\item театр
+	\item цирк
+	\item телевизор
+	\item баня
+	\item таблица умножения
+	\item сдача экзамена
+	\item ноутбук
+	\item файловая система
+	\item правительства
+	\item система прав пользователей
+	\item продуктовый магазин
+	\item учебная аудитория
+	\item родственники
+	\item структура каталогов
+	\item арифметические действия
+	\item текст
+	\item гипертекст
+	\item холодильник
+	\item лес
+	\item огород
+\end{enumerate}
+
+\end{document}
